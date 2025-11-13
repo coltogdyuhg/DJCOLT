@@ -146,9 +146,10 @@
                 <!-- Logo/Brand Name -->
                 <a href="#" onclick="showPage('view-home'); return false;" class="text-3xl font-extrabold text-white blue-glow tracking-wider">DJ <span class="text-accent-blue">COLT</span></a>
 
-                <!-- Desktop Menu (Updated with 'Contact') -->
+                <!-- Desktop Menu (Updated with 'Why Choose Us') -->
                 <div class="hidden md:flex space-x-8">
                     <a href="#" id="nav-home" onclick="showPage('view-home')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300 active-link">Home</a>
+                    <a href="#" id="nav-why-colt" onclick="showPage('view-why-colt')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300">Why Choose Us</a>
                     <a href="#" id="nav-services" onclick="showPage('view-services')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300">Services</a>
                     <a href="#" id="nav-gallery" onclick="showPage('view-gallery')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300">Gallery</a>
                     <a href="#" id="nav-requests" onclick="showPage('view-requests')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300">Song Requests</a>
@@ -165,9 +166,10 @@
             </nav>
         </div>
 
-        <!-- Mobile Menu (Updated with 'Contact') -->
+        <!-- Mobile Menu (Updated with 'Why Choose Us') -->
         <div id="mobile-menu" class="hidden md:hidden bg-primary-black border-t border-gray-800">
             <a href="#" onclick="showPage('view-home'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Home</a>
+            <a href="#" onclick="showPage('view-why-colt'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Why Choose Us</a>
             <a href="#" onclick="showPage('view-services'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Services</a>
             <a href="#" onclick="showPage('view-gallery'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Gallery</a>
             <a href="#" onclick="showPage('view-requests'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Song Requests</a>
@@ -194,9 +196,9 @@
                     <div class="my-10 space-y-6">
                         <!-- Image Placeholder (Replace URL with your actual photo!) -->
                         <img src="main-home-photo.jpg" 
-                             alt="DJ Colt performing live" 
-                             class="mx-auto rounded-xl shadow-2xl border-2 border-accent-blue/50 max-w-full h-auto"
-                             onerror="this.onerror=null; this.src='https://placehold.co/600x400/1f2937/ffffff?text=Image+Loading+Error';"
+                            alt="DJ Colt performing live" 
+                            class="mx-auto rounded-xl shadow-2xl border-2 border-accent-blue/50 max-w-full h-auto"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400/1f2937/ffffff?text=Image+Loading+Error';"
                         />
                         
                         <!-- Gallery Button -->
@@ -212,8 +214,66 @@
                 </div>
             </section>
         </div>
+        
+        <!-- 2. NEW: WHY CHOOSE DJ COLT PAGE -->
+        <div id="view-why-colt" class="page-view bg-gray-950">
+            <section class="py-16 md:py-24 px-6">
+                <div class="container mx-auto max-w-5xl">
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
+                        Why Choose <span class="text-accent-blue blue-glow">DJ Colt</span>?
+                    </h2>
+                    <p class="text-center text-gray-300 mb-16 text-xl max-w-3xl mx-auto">
+                        Choosing the right DJ shouldn't be complicated. Here are three simple reasons why DJ Colt is the perfect fit for your next event.
+                    </p>
 
-        <!-- 2. SERVICES PAGE -->
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Reason 1: Cheaper (Cost-Effectiveness) -->
+                        <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
+                            <div class="text-accent-blue mb-4">
+                                <!-- Price Tag Icon -->
+                                <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 4v4m0 4v-2.5m0-13A9 9 0 1012 2a9 9 0 000 18z"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-3 text-white">Cost-Effective Excellence</h3>
+                            <p class="text-gray-400">
+                                Booking DJ Colt is consistently **cheaper** than using a large, overpriced DJ company, yet you still receive professional-grade equipment and an electrifying performance. You get maximum impact and value without breaking your budget.
+                            </p>
+                        </div>
+
+                        <!-- Reason 2: Better Atmosphere (Vibe) -->
+                        <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
+                            <div class="text-accent-blue mb-4">
+                                <!-- Sound/Vibe Icon -->
+                                <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14c0 1.657-3.582 3-8 3s-8-1.343-8-3V6l12 3v13"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-3 text-white">Unforgettable Atmosphere</h3>
+                            <p class="text-gray-400">
+                                My primary focus is curating a **better atmosphere** that perfectly matches your vision. I am skilled at reading the room, mixing diverse genres fluidly, and ensuring every guest feels the high-energy vibe necessary for an unforgettable night.
+                            </p>
+                        </div>
+
+                        <!-- Reason 3: Easy (Booking Process) -->
+                        <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
+                            <div class="text-accent-blue mb-4">
+                                <!-- Checkmark/Easy Icon -->
+                                <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.104A9 9 0 1110.003 4.896l.707-.707a9 9 0 0112.728 12.728l-.707.707A9 9 0 0110.003 4.896z"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-3 text-white">Simple, Easy Booking</h3>
+                            <p class="text-gray-400">
+                                The entire process is **easy** and stress-free, from initial inquiry to the final song. We use simple forms for booking and requests, ensuring clear communication and zero confusion so you can focus on enjoying your event.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-16">
+                        <a href="#" onclick="showPage('view-hire'); return false;" class="inline-flex items-center justify-center px-8 py-3 bg-accent-blue text-primary-black text-lg font-bold rounded-lg transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">
+                            Book DJ Colt Today!
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 3. SERVICES PAGE (now #3) -->
         <div id="view-services" class="page-view bg-primary-black">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-6xl">
@@ -258,7 +318,7 @@
             </section>
         </div>
         
-        <!-- 3. GALLERY PAGE -->
+        <!-- 4. GALLERY PAGE (now #4) -->
         <div id="view-gallery" class="page-view bg-gray-900">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-6xl text-center">
@@ -286,7 +346,7 @@
             </section>
         </div>
 
-        <!-- 4. SONG REQUESTS PAGE -->
+        <!-- 5. SONG REQUESTS PAGE (now #5) -->
         <div id="view-requests" class="page-view bg-gray-900">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-3xl text-center">
@@ -312,39 +372,7 @@
             </section>
         </div>
 
-        <!-- 5. HIRE DJ COLT / BOOKING PAGE (UPDATED to use Google Form) -->
-        <div id="view-hire" class="page-view bg-primary-black">
-            <section class="py-16 md:py-24 px-6">
-                <div class="container mx-auto max-w-3xl text-center">
-                    <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
-                        Booking Your <span class="text-accent-blue blue-glow">Vibe</span>
-                    </h2>
-                    <p class="text-gray-300 mb-10 text-xl">
-                        To book DJ Colt for your event, please fill out the official booking form below. This helps gather all the necessary details (date, time, package choice, location) instantly!
-                    </p>
-
-                    <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-gray-800">
-                        <p class="text-gray-400 mb-6">
-                            Click the button to open the Booking Form in a new tab:
-                        </p>
-                        <a href="https://forms.gle/Q5rz3Nx32gGBLZYX6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 bg-accent-blue text-primary-black text-xl font-black rounded-lg transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">
-                            Go to Booking Form!
-                        </a>
-                        <p class="text-gray-500 mt-6 text-sm">
-                          
-                        </p>
-                    </div>
-                    
-                    <!-- Reminder about packages/contact details now below the form -->
-                    <div class="mt-10 text-gray-500 text-sm italic space-y-2">
-                        <p>Need help choosing a package? Check the <a href="#" onclick="showPage('view-services'); return false;" class="text-accent-blue hover:underline font-bold">Services</a> page.</p>
-                        <p>Have a quick question? Use the direct contact details on the <a href="#" onclick="showPage('view-contact'); return false;" class="text-accent-blue hover:underline font-bold">Contact</a> page.</p>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- 6. CONTACT PAGE (NEW) -->
+        <!-- 6. CONTACT PAGE (now #6) -->
         <div id="view-contact" class="page-view bg-primary-black">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-3xl text-center">
@@ -382,6 +410,38 @@
                         <a href="#" onclick="showPage('view-services'); return false;" class="mt-8 inline-flex items-center justify-center px-6 py-2 border border-accent-blue text-base font-bold rounded-full text-white bg-transparent transition duration-300 hover:bg-accent-blue hover:text-primary-black">
                             Review Service Packages
                         </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 7. HIRE DJ COLT / BOOKING PAGE (now #7) -->
+        <div id="view-hire" class="page-view bg-primary-black">
+            <section class="py-16 md:py-24 px-6">
+                <div class="container mx-auto max-w-3xl text-center">
+                    <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
+                        Booking Your <span class="text-accent-blue blue-glow">Vibe</span>
+                    </h2>
+                    <p class="text-gray-300 mb-10 text-xl">
+                        To book DJ Colt for your event, please fill out the official booking form below. This helps gather all the necessary details (date, time, package choice, location) instantly!
+                    </p>
+
+                    <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-gray-800">
+                        <p class="text-gray-400 mb-6">
+                            Click the button to open the Booking Form in a new tab:
+                        </p>
+                        <a href="https://forms.gle/Q5rz3Nx32gGBLZYX6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 bg-accent-blue text-primary-black text-xl font-black rounded-lg transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">
+                            Go to Booking Form!
+                        </a>
+                        <p class="text-gray-500 mt-6 text-sm">
+                             
+                        </p>
+                    </div>
+                    
+                    <!-- Reminder about packages/contact details now below the form -->
+                    <div class="mt-10 text-gray-500 text-sm italic space-y-2">
+                        <p>Need help choosing a package? Check the <a href="#" onclick="showPage('view-services'); return false;" class="text-accent-blue hover:underline font-bold">Services</a> page.</p>
+                        <p>Have a quick question? Use the direct contact details on the <a href="#" onclick="showPage('view-contact'); return false;" class="text-accent-blue hover:underline font-bold">Contact</a> page.</p>
                     </div>
                 </div>
             </section>
