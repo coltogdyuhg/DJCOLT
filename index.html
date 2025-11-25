@@ -146,7 +146,7 @@
                 <!-- Logo/Brand Name -->
                 <a href="#" onclick="showPage('view-home'); return false;" class="text-3xl font-extrabold text-white blue-glow tracking-wider">DJ <span class="text-accent-blue">COLT</span></a>
 
-                <!-- Desktop Menu (Updated with 'Why Choose Us') -->
+                <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8">
                     <a href="#" id="nav-home" onclick="showPage('view-home')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300 active-link">Home</a>
                     <a href="#" id="nav-why-colt" onclick="showPage('view-why-colt')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300">Why Choose Us</a>
@@ -166,7 +166,7 @@
             </nav>
         </div>
 
-        <!-- Mobile Menu (Updated with 'Why Choose Us') -->
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-primary-black border-t border-gray-800">
             <a href="#" onclick="showPage('view-home'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Home</a>
             <a href="#" onclick="showPage('view-why-colt'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Why Choose Us</a>
@@ -179,24 +179,33 @@
     </header>
 
     <main class="min-h-screen">
-        <!-- 1. HOME PAGE (Now with Stage Laser Background) -->
+        <!-- 1. HOME PAGE -->
         <div id="view-home" class="page-view active">
             <section class="min-h-[calc(100vh-80px-100px)] flex items-center justify-center p-6 text-center bg-primary-black laser-background">
                 <!-- Content Container, layered on top of the animation -->
                 <div class="max-w-4xl mx-auto py-12 laser-content">
                     
-                    <!-- *** HEADLINE UPDATED HERE *** -->
                     <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black mb-4 tracking-tight leading-tight">
                         <span class="block text-white">YOUR NIGHT,</span>
                         <span class="block text-accent-blue blue-glow italic">YOUR SOUNDTRACK.</span>
                     </h1>
-                    <!-- *** END OF UPDATE *** -->
+
+                    <!-- *** UPDATED: CLICK HERE TO REQUEST SONG TEXT & BUTTON *** -->
+                    <div class="mb-8">
+                        <p class="text-accent-blue font-bold text-xl mb-2 tracking-widest uppercase blue-glow">
+                            CLICK HERE TO REQUEST SONG
+                        </p>
+                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-8 py-3 bg-white text-primary-black text-lg font-bold rounded-full transition duration-300 btn-primary hover:bg-gray-200 shadow-lg shadow-white/20">
+                            CLICK HERE
+                        </a>
+                    </div>
+                    <!-- *** END UPDATE *** -->
 
                     <h2 class="text-xl sm:text-2xl text-gray-300 mb-8 font-light">
                         DJ <span class="font-bold">COLT</span>: Mixing fresh tracks and bringing the energy to <br class="hidden sm:inline"> parties, school events, and private gatherings.
                     </h2>
                     
-                    <!-- NEW: DJ Photo and Gallery Button -->
+                    <!-- DJ Photo and Gallery Button -->
                     <div class="my-10 space-y-6">
                         <!-- Image Placeholder (Replace URL with your actual photo!) -->
                         <img src="main-home-photo.jpg" 
@@ -210,7 +219,6 @@
                             CLICK HERE TO SEE GALLERY
                         </a>
                     </div>
-                    <!-- END NEW CONTENT -->
 
                     <a href="#" onclick="showPage('view-hire'); return false;" class="inline-flex items-center justify-center px-8 py-3 border-2 border-accent-blue text-base font-bold rounded-full text-white bg-transparent transition duration-300 btn-primary hover:bg-accent-blue hover:text-primary-black">
                         BOOK YOUR EVENT NOW
@@ -219,7 +227,7 @@
             </section>
         </div>
         
-        <!-- 2. NEW: WHY CHOOSE DJ COLT PAGE -->
+        <!-- 2. WHY CHOOSE DJ COLT PAGE -->
         <div id="view-why-colt" class="page-view bg-gray-950">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-5xl">
@@ -234,7 +242,6 @@
                         <!-- Reason 1: Cheaper (Cost-Effectiveness) -->
                         <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
                             <div class="text-accent-blue mb-4">
-                                <!-- Price Tag Icon -->
                                 <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 4v4m0 4v-2.5m0-13A9 9 0 1012 2a9 9 0 000 18z"></path></svg>
                             </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Cost-Effective Excellence</h3>
@@ -246,7 +253,6 @@
                         <!-- Reason 2: Better Atmosphere (Vibe) -->
                         <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
                             <div class="text-accent-blue mb-4">
-                                <!-- Sound/Vibe Icon -->
                                 <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14c0 1.657-3.582 3-8 3s-8-1.343-8-3V6l12 3v13"></path></svg>
                             </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Unforgettable Atmosphere</h3>
@@ -258,7 +264,6 @@
                         <!-- Reason 3: Easy (Booking Process) -->
                         <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
                             <div class="text-accent-blue mb-4">
-                                <!-- Checkmark/Easy Icon -->
                                 <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.104A9 9 0 1110.003 4.896l.707-.707a9 9 0 0112.728 12.728l-.707.707A9 9 0 0110.003 4.896z"></path></svg>
                             </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Simple, Easy Booking</h3>
@@ -277,7 +282,7 @@
             </section>
         </div>
 
-        <!-- 3. SERVICES PAGE (now #3) -->
+        <!-- 3. SERVICES PAGE -->
         <div id="view-services" class="page-view bg-primary-black">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-6xl">
@@ -322,7 +327,7 @@
             </section>
         </div>
         
-        <!-- 4. GALLERY PAGE (now #4) -->
+        <!-- 4. GALLERY PAGE -->
         <div id="view-gallery" class="page-view bg-gray-900">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-6xl text-center">
@@ -350,7 +355,7 @@
             </section>
         </div>
 
-        <!-- 5. SONG REQUESTS PAGE (now #5) -->
+        <!-- 5. SONG REQUESTS PAGE -->
         <div id="view-requests" class="page-view bg-gray-900">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-3xl text-center">
@@ -365,6 +370,13 @@
                         <p class="text-gray-400 mb-6">
                             Click below to open the Song Request Form in a new tab:
                         </p>
+                        
+                        <!-- *** UPDATED: TEXT ABOVE BUTTON *** -->
+                        <h3 class="text-2xl font-black text-white mb-4 tracking-wide uppercase">
+                            CLICK HERE TO REQUEST SONG
+                        </h3>
+                        <!-- *** END UPDATE *** -->
+
                         <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 bg-accent-blue text-primary-black text-xl font-black rounded-lg transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">
                             Submit a Track Now!
                         </a>
@@ -376,7 +388,7 @@
             </section>
         </div>
 
-        <!-- 6. CONTACT PAGE (now #6) -->
+        <!-- 6. CONTACT PAGE -->
         <div id="view-contact" class="page-view bg-primary-black">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-3xl text-center">
@@ -419,7 +431,7 @@
             </section>
         </div>
 
-        <!-- 7. HIRE DJ COLT / BOOKING PAGE (now #7) -->
+        <!-- 7. HIRE DJ COLT / BOOKING PAGE -->
         <div id="view-hire" class="page-view bg-primary-black">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-3xl text-center">
@@ -474,55 +486,53 @@
 
         // Helper function to update link styling
         function updateNavLinkStyle(pageId) {
+            // Remove 'active-link' from all links
             document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active-link');
-                link.classList.remove('bg-sky-400', 'shadow-lg'); // Remove temp hire styles
+                link.classList.remove('active-link', 'text-white', 'border-b-2', 'border-accent-blue');
+                link.classList.add('text-lg'); // Reset base size if needed
             });
-            const activeLink = document.getElementById('nav-' + pageId.replace('view-', ''));
-            if (activeLink) {
-                 if (pageId === 'view-hire') {
-                    // Special style for the 'Hire' button
-                    activeLink.classList.add('bg-sky-400', 'shadow-lg');
-                 } else {
+
+            // Add 'active-link' to the current page link (if it exists in the nav)
+            let activeNavId = '';
+            if (pageId === 'view-home') activeNavId = 'nav-home';
+            else if (pageId === 'view-services') activeNavId = 'nav-services';
+            else if (pageId === 'view-gallery') activeNavId = 'nav-gallery';
+            else if (pageId === 'view-contact') activeNavId = 'nav-contact';
+            else if (pageId === 'view-why-colt') activeNavId = 'nav-why-colt';
+            else if (pageId === 'view-requests') activeNavId = 'nav-requests';
+            // Note: 'Hire' button usually keeps its own distinct style
+
+            if (activeNavId) {
+                const activeLink = document.getElementById(activeNavId);
+                if (activeLink) {
                     activeLink.classList.add('active-link');
-                 }
-            } else if (pageId === 'view-home') {
-                 // Fallback for home
-                 document.getElementById('nav-home').classList.add('active-link');
+                }
             }
         }
 
-        // Main function to switch pages
+        // Main function to show specific pages (SPA feel)
         function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page-view').forEach(page => {
+            // 1. Hide all pages
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(page => {
                 page.classList.remove('active');
+                // Use a small timeout to allow the opacity transition to finish before setting display:none
+                // However, for simplicity and snappiness, we just toggle the class which handles opacity
+                // To actually remove from flow, we might need a timeout, but CSS handles display:none in non-active state
             });
-            
-            // Show the target page
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                // We use a tiny timeout to allow the 'display: block' to register
-                // before we change opacity, triggering the CSS fade-in transition.
-                setTimeout(() => {
-                    targetPage.classList.add('active');
-                }, 10); // 10ms is enough
-            } else {
-                // Fallback to home if page not found
-                setTimeout(() => {
-                    document.getElementById('view-home').classList.add('active');
-                }, 10);
-                pageId = 'view-home';
-            }
-            
-            // Update nav link styles
-            updateNavLinkStyle(pageId);
 
-            // Scroll to the top of the new page content
-            window.scrollTo(0, 0);
+            // 2. Show the selected page
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+                window.scrollTo(0, 0); // Scroll to top
+            }
+
+            // 3. Update Navigation Styling
+            updateNavLinkStyle(pageId);
         }
 
-        // Initialize the home page on load
+        // Initialize default view
         document.addEventListener('DOMContentLoaded', () => {
             showPage('view-home');
         });
