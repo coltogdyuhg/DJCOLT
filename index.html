@@ -13,8 +13,9 @@
                 extend: {
                     colors: {
                         'primary-black': '#0a0a0a',
-                        'accent-blue': '#06b6d4', // sky-500 for a bright, modern blue
+                        'accent-blue': '#06b6d4',
                         'light-text': '#e5e7eb',
+                        'gold-glow': '#ffd700',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -28,44 +29,76 @@
         .blue-glow {
             text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4;
         }
+
+        /* --- GOLD GLOW ANIMATION FOR SONG REQUESTS --- */
+        .gold-glow-text {
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: pulseGold 2s infinite alternate ease-in-out;
+        }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            background-size: 400% 400%;
+            animation: goldGradient 3s ease infinite, pulseScale 2s infinite;
+            border: none;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        @keyframes pulseGold {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5); transform: scale(1); }
+            100% { text-shadow: 0 0 25px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 215, 0, 0.8); transform: scale(1.05); }
+        }
+
+        @keyframes goldGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulseScale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+        }
+        /* --- END GOLD GLOW --- */
+
         .section-separator {
             background: linear-gradient(to right, #0a0a0a, #06b6d4, #0a0a0a);
             height: 2px;
             width: 80%;
-            margin: 2rem auto; /* Adjusted margin */
+            margin: 2rem auto;
             border-radius: 9999px;
         }
-        /* Style for the button hover effect */
+        
         .btn-primary:hover {
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
             transform: translateY(-2px);
         }
-        /* Hide all pages by default, JavaScript will manage visibility */
+
         .page-view {
             display: none;
-            min-height: calc(100vh - 80px - 100px); /* 100vh minus header/footer height */
+            min-height: calc(100vh - 80px - 100px);
             padding: 2rem 0;
-            opacity: 0; /* Add opacity for fade effect */
-            transition: opacity 0.4s ease-in-out; /* Add transition duration */
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
         }
-        /* Ensure the active page is visible and fully opaque (fade in) */
+
         .page-view.active {
             display: block;
             opacity: 1; 
         }
-        /* Active nav link style */
+
         .nav-link.active-link {
             border-bottom: 2px solid #06b6d4;
             color: white;
         }
         
-        /* --- LASER BACKGROUND STYLES (UPDATED FOR STAGE EFFECT) --- */
         .laser-background {
             position: relative;
             overflow: hidden;
         }
         
-        /* Wrapper to keep content (text, buttons) above the pseudo-element background */
         .laser-content {
             position: relative;
             z-index: 10; 
@@ -73,80 +106,44 @@
             padding-bottom: 5rem;
         }
 
-        /* The animated pseudo-element that creates the laser grid and beams effect */
         .laser-background::after {
             content: '';
             position: absolute;
-            top: 0; /* Start from the top of the container */
+            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            
-            /* Anchor for all rotations/transforms is the bottom center, like a stage */
             transform-origin: 50% 100%; 
-            
-            /* Multiple background layers combined: Diagonal Beams + Radial Glow + Grid */
             background: 
-                /* 1. Diagonal Laser Beams (Thicker, more visible, shooting from bottom center) */
-                repeating-linear-gradient(
-                    60deg,
-                    transparent 0,
-                    #06b6d4 1px, /* Thick blue line */
-                    #0a0a0a 100px /* Wide gap */
-                ),
-                repeating-linear-gradient(
-                    120deg,
-                    transparent 0,
-                    #06b6d4 1px, /* Thick blue line */
-                    #0a0a0a 100px /* Wide gap */
-                ),
-                /* 2. Radial Glow (Fills the center stage area) */
+                repeating-linear-gradient(60deg, transparent 0, #06b6d4 1px, #0a0a0a 100px),
+                repeating-linear-gradient(120deg, transparent 0, #06b6d4 1px, #0a0a0a 100px),
                 radial-gradient(circle at 50% 100%, rgba(6, 182, 212, 0.2) 0%, transparent 40%),
-                /* 3. Original Grid Lines (Subtle) */
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    #06b6d433 1px, 
-                    #0a0a0a 30px
-                ),
-                repeating-linear-gradient(
-                    90deg,
-                    transparent,
-                    #06b6d433 1px, 
-                    #0a0a0a 30px
-                );
-                
+                repeating-linear-gradient(0deg, transparent, #06b6d433 1px, #0a0a0a 30px),
+                repeating-linear-gradient(90deg, transparent, #06b6d433 1px, #0a0a0a 30px);
             animation: pulseGrid 2s linear infinite, rotateGrid 20s linear infinite alternate;
-            opacity: 0.8; /* Base opacity */
+            opacity: 0.8;
         }
 
-        /* Keyframes for rotation - Creates a gentle, side-to-side sway from the bottom anchor */
         @keyframes rotateGrid {
             0% { transform: rotate(-5deg); }
             100% { transform: rotate(5deg); }
         }
         
-        /* Keyframes for subtle pulsing/flicker (Faster flicker for an electric feel) */
         @keyframes pulseGrid {
             0% { opacity: 0.2; }
             50% { opacity: 0.4; }
             100% { opacity: 0.2; }
         }
-        /* --- END LASER BACKGROUND STYLES --- */
     </style>
 </head>
 
-<!-- Main body uses near-black background and light text -->
 <body class="bg-primary-black text-light-text font-sans antialiased">
 
-    <!-- NAVIGATION BAR -->
     <header class="sticky top-0 z-50 bg-primary-black/95 backdrop-blur-sm shadow-xl">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <nav class="flex items-center justify-between h-20">
-                <!-- Logo/Brand Name -->
                 <a href="#" onclick="showPage('view-home'); return false;" class="text-3xl font-extrabold text-white blue-glow tracking-wider">DJ <span class="text-accent-blue">COLT</span></a>
 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8">
                     <a href="#" id="nav-home" onclick="showPage('view-home')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300 active-link">Home</a>
                     <a href="#" id="nav-why-colt" onclick="showPage('view-why-colt')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300">Why Choose Us</a>
@@ -157,7 +154,6 @@
                     <a href="#" id="nav-hire" onclick="showPage('view-hire')" class="py-2 px-4 rounded-lg bg-accent-blue text-primary-black font-bold transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">Hire DJ Colt</a>
                 </div>
 
-                <!-- Mobile Menu Button -->
                 <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
@@ -166,7 +162,6 @@
             </nav>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-primary-black border-t border-gray-800">
             <a href="#" onclick="showPage('view-home'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Home</a>
             <a href="#" onclick="showPage('view-why-colt'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Why Choose Us</a>
@@ -182,7 +177,6 @@
         <!-- 1. HOME PAGE -->
         <div id="view-home" class="page-view active">
             <section class="min-h-[calc(100vh-80px-100px)] flex items-center justify-center p-6 text-center bg-primary-black laser-background">
-                <!-- Content Container, layered on top of the animation -->
                 <div class="max-w-4xl mx-auto py-12 laser-content">
                     
                     <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black mb-4 tracking-tight leading-tight">
@@ -190,31 +184,28 @@
                         <span class="block text-accent-blue blue-glow italic">YOUR SOUNDTRACK.</span>
                     </h1>
 
-                    <!-- *** UPDATED: CLICK HERE TO REQUEST SONG TEXT & BUTTON *** -->
-                    <div class="mb-8">
-                        <p class="text-accent-blue font-bold text-xl mb-2 tracking-widest uppercase blue-glow">
+                    <!-- GOLDEN ANIMATED REQUEST SECTION -->
+                    <div class="mb-12 mt-8 transform transition-transform">
+                        <p class="gold-glow-text font-black text-2xl sm:text-3xl mb-4 tracking-tighter uppercase inline-block">
                             CLICK HERE TO REQUEST SONG
                         </p>
-                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-8 py-3 bg-white text-primary-black text-lg font-bold rounded-full transition duration-300 btn-primary hover:bg-gray-200 shadow-lg shadow-white/20">
+                        <br>
+                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 btn-gold text-xl font-black rounded-full transition duration-300 shadow-2xl">
                             CLICK HERE
                         </a>
                     </div>
-                    <!-- *** END UPDATE *** -->
 
                     <h2 class="text-xl sm:text-2xl text-gray-300 mb-8 font-light">
                         DJ <span class="font-bold">COLT</span>: Mixing fresh tracks and bringing the energy to <br class="hidden sm:inline"> parties, school events, and private gatherings.
                     </h2>
                     
-                    <!-- DJ Photo and Gallery Button -->
                     <div class="my-10 space-y-6">
-                        <!-- Image Placeholder (Replace URL with your actual photo!) -->
                         <img src="main-home-photo.jpg" 
                              alt="DJ Colt performing live" 
                              class="mx-auto rounded-xl shadow-2xl border-2 border-accent-blue/50 max-w-full h-auto"
                              onerror="this.onerror=null; this.src='https://placehold.co/600x400/1f2937/ffffff?text=Image+Loading+Error';"
                         />
                         
-                        <!-- Gallery Button -->
                         <a href="#" onclick="showPage('view-gallery'); return false;" class="inline-flex items-center justify-center px-6 py-2 text-base font-bold rounded-full text-primary-black bg-accent-blue transition duration-300 btn-primary hover:bg-sky-400 hover:shadow-accent-blue/50">
                             CLICK HERE TO SEE GALLERY
                         </a>
@@ -239,37 +230,28 @@
                     </p>
 
                     <div class="grid md:grid-cols-3 gap-8">
-                        <!-- Reason 1: Cheaper (Cost-Effectiveness) -->
                         <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
                             <div class="text-accent-blue mb-4">
                                 <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 4v4m0 4v-2.5m0-13A9 9 0 1012 2a9 9 0 000 18z"></path></svg>
                             </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Cost-Effective Excellence</h3>
-                            <p class="text-gray-400">
-                                Booking DJ Colt is consistently **cheaper** than using a large, overpriced DJ company, yet you still receive professional-grade equipment and an electrifying performance. You get maximum impact and value without breaking your budget.
-                            </p>
+                            <p class="text-gray-400">Booking DJ Colt is consistently **cheaper** than large companies, but you still get pro-grade sound and lighting.</p>
                         </div>
 
-                        <!-- Reason 2: Better Atmosphere (Vibe) -->
                         <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
                             <div class="text-accent-blue mb-4">
                                 <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14c0 1.657-3.582 3-8 3s-8-1.343-8-3V6l12 3v13"></path></svg>
                             </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Unforgettable Atmosphere</h3>
-                            <p class="text-gray-400">
-                                My primary focus is curating a **better atmosphere** that perfectly matches your vision. I am skilled at reading the room, mixing diverse genres fluidly, and ensuring every guest feels the high-energy vibe necessary for an unforgettable night.
-                            </p>
+                            <p class="text-gray-400">I focus on reading the room and mixing diverse genres to keep the dance floor packed and the energy high.</p>
                         </div>
 
-                        <!-- Reason 3: Easy (Booking Process) -->
                         <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
                             <div class="text-accent-blue mb-4">
                                 <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.104A9 9 0 1110.003 4.896l.707-.707a9 9 0 0112.728 12.728l-.707.707A9 9 0 0110.003 4.896z"></path></svg>
                             </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Simple, Easy Booking</h3>
-                            <p class="text-gray-400">
-                                The entire process is **easy** and stress-free, from initial inquiry to the final song. We use simple forms for booking and requests, ensuring clear communication and zero confusion so you can focus on enjoying your event.
-                            </p>
+                            <p class="text-gray-400">Stress-free process from inquiry to the final song. Clear communication and zero confusion for your big day.</p>
                         </div>
                     </div>
                     
@@ -289,38 +271,18 @@
                     <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
                         DJ Colt Service Packages
                     </h2>
-                    <p class="text-center text-gray-400 mb-10 text-xl">
-                        I offer high-energy music and professional lighting/sound for any occasion.
-                    </p>
                     <div class="grid md:grid-cols-3 gap-8">
-                        <!-- Service Card 1: Parties -->
                         <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800">
-                            <div class="text-accent-blue mb-4">
-                                <svg class="w-10 h-10 blue-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                            </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">The Party Starter</h3>
-                            <p class="text-gray-400">Perfect for birthdays, block parties, and smaller private celebrations. Includes 2+ hours of mixing and basic lighting.</p>
-                            <a href="#" onclick="showPage('view-hire'); return false;" class="mt-4 inline-block text-accent-blue hover:text-sky-300 font-semibold transition duration-300">Inquire about Party rates &rarr;</a>
+                            <p class="text-gray-400">Perfect for birthdays and private celebrations. Includes 2+ hours and basic lighting.</p>
                         </div>
-
-                        <!-- Service Card 2: School/Large Events -->
                         <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800">
-                            <div class="text-accent-blue mb-4">
-                                <svg class="w-10 h-10 blue-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                            </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Event Energy Pack</h3>
-                            <p class="text-gray-400">Designed for school dances, fundraisers, banquets, and community events. Includes 3+ hours, sound system, and basic light show.</p>
-                            <a href="#" onclick="showPage('view-hire'); return false;" class="mt-4 inline-block text-accent-blue hover:text-sky-300 font-semibold transition duration-300">Inquire about Event rates &rarr;</a>
+                            <p class="text-gray-400">Designed for school dances and fundraisers. Includes 3+ hours, sound system, and light show.</p>
                         </div>
-
-                        <!-- Service Card 3: Custom -->
                         <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800">
-                            <div class="text-accent-blue mb-4">
-                                <svg class="w-10 h-10 blue-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9.75 19L11.75 19L11.75 17L9.75 17ZM15.75 17L15.75 19L17.75 19L17.75 17L15.75 17ZM21 12H3C1.895 12 1 11.105 1 10V5C1 3.895 1.895 3 3 3H21C22.105 3 23 3.895 23 5V10C23 11.105 22.105 12 21 12ZM21 12V21C21 22.105 20.105 23 19 23H5C3.895 23 3 22.105 3 21V12H21Z"></path></svg>
-                            </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Custom Vibe Package</h3>
-                            <p class="text-gray-400">Need something specific? A theme night, small gathering, or unique event? Let's build a custom package just for you.</p>
-                            <a href="#" onclick="showPage('view-hire'); return false;" class="mt-4 inline-block text-accent-blue hover:text-sky-300 font-semibold transition duration-300">Contact for Custom Quote &rarr;</a>
+                            <p class="text-gray-400">Theme nights or unique events? Let's build a custom package just for you.</p>
                         </div>
                     </div>
                 </div>
@@ -334,23 +296,12 @@
                     <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
                         Event <span class="text-accent-blue blue-glow">Gallery</span>
                     </h2>
-                    <p class="text-gray-300 mb-10 text-xl">
-                        Check out the latest photos from my live shows and events! This section is fully responsive and great for showcasing your best work.
-                    </p>
-
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        <!-- Placeholder Gallery Items - Replace these URLs with your actual image links! -->
                         <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+1" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md">
                         <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+2" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md">
                         <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+3" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md">
                         <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+4" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md">
-                        <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+5" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md hidden sm:block">
-                        <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+6" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md hidden md:block">
                     </div>
-                    
-                    <p class="text-gray-500 mt-8 text-sm">
-                        *Remember to update the image URLs in the code to display your own photos.
-                    </p>
                 </div>
             </section>
         </div>
@@ -359,29 +310,24 @@
         <div id="view-requests" class="page-view bg-gray-900">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-3xl text-center">
-                    <h2 class="text-5xl font-extrabold mb-6 text-accent-blue blue-glow border-b-2 border-accent-blue pb-4 mx-auto w-fit">
+                    <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
                         Song Requests
                     </h2>
                     <p class="text-gray-300 mb-10 text-xl">
-                        I love taking requests! To ensure I have the right version and can track all the top tunes for my next event, please use my official Google Form.
+                        I love taking requests! Use the form below to let me know what you want to hear.
                     </p>
 
-                    <div class="bg-primary-black p-8 rounded-xl shadow-2xl border border-gray-800">
-                        <p class="text-gray-400 mb-6">
-                            Click below to open the Song Request Form in a new tab:
-                        </p>
-                        
-                        <!-- *** UPDATED: TEXT ABOVE BUTTON *** -->
-                        <h3 class="text-2xl font-black text-white mb-4 tracking-wide uppercase">
+                    <div class="bg-primary-black p-10 rounded-2xl shadow-2xl border-2 border-gold-glow/30">
+                        <!-- GOLDEN ANIMATED REQUEST HEADER (NO EMOJIS) -->
+                        <h3 class="gold-glow-text text-3xl font-black mb-8 tracking-tighter uppercase">
                             CLICK HERE TO REQUEST SONG
                         </h3>
-                        <!-- *** END UPDATE *** -->
 
-                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 bg-accent-blue text-primary-black text-xl font-black rounded-lg transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">
+                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-12 py-5 btn-gold text-2xl font-black rounded-xl transition duration-300 shadow-lg">
                             Submit a Track Now!
                         </a>
-                        <p class="text-gray-500 mt-6 text-sm">
-                            (Request songs for DJ Colt to play!)
+                        <p class="text-gray-500 mt-8 text-sm">
+                            (Direct link to DJ Colt's official request form)
                         </p>
                     </div>
                 </div>
@@ -395,37 +341,18 @@
                     <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
                         Get In <span class="text-accent-blue blue-glow">Touch</span>
                     </h2>
-                    <p class="text-gray-300 mb-10 text-xl">
-                        Ready to discuss your event or just have a quick question? Here's how you can reach DJ Colt directly.
-                    </p>
-
                     <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-gray-800 space-y-6">
-                        
-                        <!-- Contact Details -->
                         <div class="space-y-4">
                             <p class="text-2xl font-bold text-accent-blue flex items-center justify-center">
-                                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
                                 Phone/Text: <a href="tel:4129531428" class="ml-2 hover:underline">412-953-1428</a>
                             </p>
                             <p class="text-xl text-gray-300 flex items-center justify-center">
-                                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-9 13H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2h-7"></path></svg>
                                 Email: <a href="mailto:colterlc1928@gmail.com" class="ml-2 hover:underline">colterlc1928@gmail.com</a>
                             </p>
                         </div>
-
-                        <!-- IMPORTANT NOTE -->
                         <div class="pt-4 border-t border-gray-700">
-                            <p class="text-lg font-semibold text-white mb-2">
-                                <span class="text-red-400 mr-1">*</span> IMPORTANT NOTE:
-                            </p>
-                            <p class="text-gray-400 italic">
-                                I would **prefer using phone number text**. Please announce that your message is about DJing so I can prioritize your booking inquiry!
-                            </p>
+                            <p class="text-gray-400 italic">Please text me to discuss DJing—it's the fastest way to get a reply!</p>
                         </div>
-                        
-                        <a href="#" onclick="showPage('view-services'); return false;" class="mt-8 inline-flex items-center justify-center px-6 py-2 border border-accent-blue text-base font-bold rounded-full text-white bg-transparent transition duration-300 hover:bg-accent-blue hover:text-primary-black">
-                            Review Service Packages
-                        </a>
                     </div>
                 </div>
             </section>
@@ -438,61 +365,36 @@
                     <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
                         Booking Your <span class="text-accent-blue blue-glow">Vibe</span>
                     </h2>
-                    <p class="text-gray-300 mb-10 text-xl">
-                        To book DJ Colt for your event, please fill out the official booking form below. This helps gather all the necessary details (date, time, package choice, location) instantly!
-                    </p>
-
                     <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-gray-800">
-                        <p class="text-gray-400 mb-6">
-                            Click the button to open the Booking Form in a new tab:
-                        </p>
                         <a href="https://forms.gle/Q5rz3Nx32gGBLZYX6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 bg-accent-blue text-primary-black text-xl font-black rounded-lg transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">
                             Go to Booking Form!
                         </a>
-                        <p class="text-gray-500 mt-6 text-sm">
-                            
-                        </p>
-                    </div>
-                    
-                    <!-- Reminder about packages/contact details now below the form -->
-                    <div class="mt-10 text-gray-500 text-sm italic space-y-2">
-                        <p>Need help choosing a package? Check the <a href="#" onclick="showPage('view-services'); return false;" class="text-accent-blue hover:underline font-bold">Services</a> page.</p>
-                        <p>Have a quick question? Use the direct contact details on the <a href="#" onclick="showPage('view-contact'); return false;" class="text-accent-blue hover:underline font-bold">Contact</a> page.</p>
                     </div>
                 </div>
             </section>
         </div>
-
     </main>
 
-    <!-- FOOTER -->
     <footer class="bg-gray-950 border-t border-gray-800 mt-12 py-8 px-6">
         <div class="container mx-auto text-center text-gray-500">
             <p>&copy; <span id="current-year"></span> DJ Colt. All rights reserved. | <span class="text-accent-blue">The Vibe Architect</span></p>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT FOR PAGE SWITCHING & INTERACTIVITY -->
     <script>
-        // Get the current year for the copyright
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // Mobile menu toggle logic
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
         document.getElementById('mobile-menu-button').addEventListener('click', toggleMenu);
 
-        // Helper function to update link styling
         function updateNavLinkStyle(pageId) {
-            // Remove 'active-link' from all links
             document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active-link', 'text-white', 'border-b-2', 'border-accent-blue');
-                link.classList.add('text-lg'); // Reset base size if needed
+                link.classList.remove('active-link');
             });
 
-            // Add 'active-link' to the current page link (if it exists in the nav)
             let activeNavId = '';
             if (pageId === 'view-home') activeNavId = 'nav-home';
             else if (pageId === 'view-services') activeNavId = 'nav-services';
@@ -500,39 +402,25 @@
             else if (pageId === 'view-contact') activeNavId = 'nav-contact';
             else if (pageId === 'view-why-colt') activeNavId = 'nav-why-colt';
             else if (pageId === 'view-requests') activeNavId = 'nav-requests';
-            // Note: 'Hire' button usually keeps its own distinct style
 
             if (activeNavId) {
                 const activeLink = document.getElementById(activeNavId);
-                if (activeLink) {
-                    activeLink.classList.add('active-link');
-                }
+                if (activeLink) activeLink.classList.add('active-link');
             }
         }
 
-        // Main function to show specific pages (SPA feel)
         function showPage(pageId) {
-            // 1. Hide all pages
             const pages = document.querySelectorAll('.page-view');
-            pages.forEach(page => {
-                page.classList.remove('active');
-                // Use a small timeout to allow the opacity transition to finish before setting display:none
-                // However, for simplicity and snappiness, we just toggle the class which handles opacity
-                // To actually remove from flow, we might need a timeout, but CSS handles display:none in non-active state
-            });
+            pages.forEach(page => page.classList.remove('active'));
 
-            // 2. Show the selected page
             const selectedPage = document.getElementById(pageId);
             if (selectedPage) {
                 selectedPage.classList.add('active');
-                window.scrollTo(0, 0); // Scroll to top
+                window.scrollTo(0, 0);
             }
-
-            // 3. Update Navigation Styling
             updateNavLinkStyle(pageId);
         }
 
-        // Initialize default view
         document.addEventListener('DOMContentLoaded', () => {
             showPage('view-home');
         });
