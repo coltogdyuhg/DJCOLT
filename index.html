@@ -94,14 +94,11 @@
             color: white;
         }
 
-        /* Video Container to match screenshot sizing */
-        .video-wrapper {
+        /* Updated Hero Container for a "Full Height" immersive look like the photo */
+        .hero-section {
             position: relative;
             width: 100%;
-            max-width: 450px; /* Adjusting to match the portrait look in the screenshot */
-            aspect-ratio: 9/16; /* Portrait ratio matching common mobile recordings */
-            margin: 0 auto;
-            border-radius: 1rem;
+            height: calc(100vh - 80px); /* Fill the screen below the nav */
             overflow: hidden;
             background: #000;
         }
@@ -112,14 +109,15 @@
             object-fit: cover;
         }
 
-        /* Overlay specific to the video area */
+        /* Overlay to darken background for text readability */
         .video-vignette {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.6) 0%, transparent 40%, transparent 60%, rgba(10, 10, 10, 0.8) 100%);
+            background: rgba(0, 0, 0, 0.4); /* General darken */
+            background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.7) 100%);
             pointer-events: none;
             z-index: 5;
         }
@@ -179,44 +177,42 @@
     <main class="min-h-screen">
         <!-- 1. HOME PAGE -->
         <div id="view-home" class="page-view active">
-            <section class="min-h-[calc(100vh-80px-100px)] flex flex-col items-center justify-center py-12 px-4 bg-primary-black">
+            <!-- Full size video background layout exactly like the photo -->
+            <section class="hero-section">
                 
-                <!-- Video Container exactly the size/ratio of the photo -->
-                <div class="video-wrapper shadow-2xl border-2 border-accent-blue/30">
-                    <video autoplay muted loop playsinline class="video-bg-element">
-                        <source src="Recording 2026-05-16 001926.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-vignette"></div>
+                <video autoplay muted loop playsinline class="video-bg-element">
+                    <source src="Recording 2026-05-16 001926.mp4" type="video/mp4">
+                </video>
+                <div class="video-vignette"></div>
 
-                    <!-- Hero Content Overlaid on the Video Area -->
-                    <div class="hero-content-layer text-center">
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black mb-2 tracking-tight leading-tight">
-                            <span class="block text-white">YOUR NIGHT,</span>
-                            <span class="block text-accent-blue blue-glow italic uppercase">Your Soundtrack.</span>
-                        </h1>
+                <!-- Hero Content Overlaid on the Full Video -->
+                <div class="hero-content-layer text-center">
+                    <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black mb-4 tracking-tight leading-none">
+                        <span class="block text-white drop-shadow-lg">YOUR NIGHT,</span>
+                        <span class="block text-accent-blue blue-glow italic uppercase drop-shadow-xl">Your Soundtrack.</span>
+                    </h1>
 
-                        <!-- GOLDEN ANIMATED REQUEST SECTION -->
-                        <div class="mb-6 mt-4">
-                            <p class="gold-glow-text font-black text-lg sm:text-xl mb-3 tracking-tighter uppercase">
-                                Click here to request song
-                            </p>
-                            <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-8 py-3 btn-gold text-lg font-black rounded-full transition duration-300 shadow-xl">
-                                CLICK HERE
-                            </a>
-                        </div>
+                    <!-- GOLDEN ANIMATED REQUEST SECTION -->
+                    <div class="mb-8 mt-6">
+                        <p class="gold-glow-text font-black text-xl sm:text-2xl mb-4 tracking-tighter uppercase">
+                            Click here to request song
+                        </p>
+                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 btn-gold text-2xl font-black rounded-full transition duration-300 shadow-2xl">
+                            CLICK HERE
+                        </a>
+                    </div>
 
-                        <h2 class="text-sm sm:text-base text-gray-200 mb-6 font-medium max-w-xs mx-auto drop-shadow-md">
-                            DJ <span class="font-bold text-white">COLT</span>: Mixing fresh tracks and bringing the energy to parties, school events, and gatherings.
-                        </h2>
-                        
-                        <div class="flex flex-col gap-3 w-full max-w-[250px]">
-                            <a href="#" onclick="showPage('view-gallery'); return false;" class="px-6 py-2 text-xs font-bold rounded-full text-primary-black bg-accent-blue transition duration-300 btn-primary uppercase tracking-widest">
-                                View Gallery
-                            </a>
-                            <a href="#" onclick="showPage('view-hire'); return false;" class="px-6 py-2 border border-white text-xs font-bold rounded-full text-white bg-black/40 backdrop-blur-sm transition duration-300 hover:bg-white hover:text-black uppercase tracking-widest">
-                                Book Event Now
-                            </a>
-                        </div>
+                    <h2 class="text-lg sm:text-xl text-gray-100 mb-8 font-medium max-w-lg mx-auto drop-shadow-lg">
+                        DJ <span class="font-bold text-white">COLT</span>: Mixing fresh tracks and bringing the energy to parties, school events, and gatherings.
+                    </h2>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 w-full justify-center items-center">
+                        <a href="#" onclick="showPage('view-gallery'); return false;" class="w-64 py-3 text-sm font-bold rounded-full text-primary-black bg-accent-blue transition duration-300 btn-primary uppercase tracking-widest text-center shadow-lg">
+                            View Gallery
+                        </a>
+                        <a href="#" onclick="showPage('view-hire'); return false;" class="w-64 py-3 border-2 border-white text-sm font-bold rounded-full text-white bg-black/40 backdrop-blur-sm transition duration-300 hover:bg-white hover:text-black uppercase tracking-widest text-center shadow-lg">
+                            Book Event Now
+                        </a>
                     </div>
                 </div>
 
@@ -373,7 +369,7 @@
         </div>
     </main>
 
-    <footer class="bg-gray-950 border-t border-gray-800 mt-12 py-8 px-6">
+    <footer class="bg-gray-950 border-t border-gray-800 py-8 px-6">
         <div class="container mx-auto text-center text-gray-500">
             <p>&copy; <span id="current-year"></span> DJ Colt. All rights reserved. | <span class="text-accent-blue">The Vibe Architect</span></p>
         </div>
