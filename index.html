@@ -27,7 +27,7 @@
     <style>
         /* Custom styles for a subtle "digital glow" effect on blue elements */
         .blue-glow {
-            text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4;
+            text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4, 0 0 20px rgba(6, 182, 212, 0.5);
         }
 
         /* --- GOLD GLOW ANIMATION FOR SONG REQUESTS --- */
@@ -61,25 +61,60 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
         }
-        /* --- END GOLD GLOW --- */
 
-        .section-separator {
-            background: linear-gradient(to right, #0a0a0a, #06b6d4, #0a0a0a);
-            height: 2px;
-            width: 80%;
-            margin: 2rem auto;
-            border-radius: 9999px;
+        /* --- UPDATED VIDEO BACKGROUND LAYOUT --- */
+        .hero-container {
+            position: relative;
+            min-height: calc(100vh - 80px);
+            background-color: #000;
+            display: flex;
+            justify-content: center;
         }
-        
-        .btn-primary:hover {
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
-            transform: translateY(-2px);
+
+        /* This wrapper is now constrained to the width of the headline text */
+        .video-background-wrapper {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            /* Matches the width of the "YOUR SOUNDTRACK" text container */
+            width: 100%;
+            max-width: 800px; 
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 0 50px rgba(6, 182, 212, 0.2);
+        }
+
+        #bg-video-player {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* Keep video large enough to cover the vertical column */
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* Darkness overlay focused on the column */
+        .vignette-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.8) 100%);
+            pointer-events: none;
         }
 
         .page-view {
             display: none;
             min-height: calc(100vh - 80px - 100px);
-            padding: 2rem 0;
             opacity: 0;
             transition: opacity 0.4s ease-in-out;
         }
@@ -94,46 +129,18 @@
             color: white;
         }
 
-        /* Updated Hero Container for a "Full Height" immersive look like the photo */
-        .hero-section {
+        .hero-content {
             position: relative;
-            width: 100%;
-            height: calc(100vh - 80px); /* Fill the screen below the nav */
-            overflow: hidden;
-            background: #000;
-        }
-
-        .video-bg-element {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Overlay to darken background for text readability */
-        .video-vignette {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* General darken */
-            background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.7) 100%);
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .hero-content-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
+            width: 100%;
+            max-width: 800px; /* Aligned with video wrapper */
+        }
+
+        /* Responsive width adjustment for the video column */
+        @media (max-width: 640px) {
+            .video-background-wrapper, .hero-content {
+                max-width: 90%;
+            }
         }
     </style>
 </head>
@@ -177,45 +184,46 @@
     <main class="min-h-screen">
         <!-- 1. HOME PAGE -->
         <div id="view-home" class="page-view active">
-            <!-- Full size video background layout exactly like the photo -->
-            <section class="hero-section">
+            <section class="hero-container flex items-center justify-center p-6 text-center">
                 
-                <video autoplay muted loop playsinline class="video-bg-element">
-                    <source src="Recording 2026-05-16 001926.mp4" type="video/mp4">
-                </video>
-                <div class="video-vignette"></div>
+                <!-- BACKGROUND VIDEO COLUMN - constrained width -->
+                <div class="video-background-wrapper">
+                    <div id="bg-video-player"></div>
+                    <div class="vignette-overlay"></div>
+                </div>
 
-                <!-- Hero Content Overlaid on the Full Video -->
-                <div class="hero-content-layer text-center">
-                    <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black mb-4 tracking-tight leading-none">
+                <!-- CONTENT LAYER - width matches the video column -->
+                <div class="hero-content mx-auto py-12">
+                    
+                    <h1 class="text-6xl sm:text-7xl lg:text-9xl font-black mb-6 tracking-tight leading-none">
                         <span class="block text-white drop-shadow-lg">YOUR NIGHT,</span>
-                        <span class="block text-accent-blue blue-glow italic uppercase drop-shadow-xl">Your Soundtrack.</span>
+                        <span class="block text-accent-blue blue-glow italic">YOUR SOUNDTRACK.</span>
                     </h1>
 
                     <!-- GOLDEN ANIMATED REQUEST SECTION -->
-                    <div class="mb-8 mt-6">
-                        <p class="gold-glow-text font-black text-xl sm:text-2xl mb-4 tracking-tighter uppercase">
-                            Click here to request song
+                    <div class="mb-12 mt-10">
+                        <p class="gold-glow-text font-black text-2xl sm:text-3xl mb-4 tracking-tighter uppercase inline-block">
+                            CLICK HERE TO REQUEST SONG
                         </p>
-                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 btn-gold text-2xl font-black rounded-full transition duration-300 shadow-2xl">
+                        <br>
+                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-12 py-5 btn-gold text-2xl font-black rounded-full transition duration-300 shadow-2xl">
                             CLICK HERE
                         </a>
                     </div>
 
-                    <h2 class="text-lg sm:text-xl text-gray-100 mb-8 font-medium max-w-lg mx-auto drop-shadow-lg">
-                        DJ <span class="font-bold text-white">COLT</span>: Mixing fresh tracks and bringing the energy to parties, school events, and gatherings.
+                    <h2 class="text-xl sm:text-3xl text-gray-200 mb-12 font-light drop-shadow-md leading-relaxed">
+                        DJ <span class="font-bold">COLT</span>: Mixing fresh tracks and bringing the energy to <br class="hidden sm:inline"> parties, school events, and private gatherings.
                     </h2>
                     
-                    <div class="flex flex-col sm:flex-row gap-4 w-full justify-center items-center">
-                        <a href="#" onclick="showPage('view-gallery'); return false;" class="w-64 py-3 text-sm font-bold rounded-full text-primary-black bg-accent-blue transition duration-300 btn-primary uppercase tracking-widest text-center shadow-lg">
-                            View Gallery
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                        <a href="#" onclick="showPage('view-gallery'); return false;" class="px-10 py-4 text-lg font-bold rounded-full text-primary-black bg-accent-blue transition duration-300 hover:bg-sky-300 hover:scale-105 shadow-lg shadow-accent-blue/20">
+                            VIEW GALLERY
                         </a>
-                        <a href="#" onclick="showPage('view-hire'); return false;" class="w-64 py-3 border-2 border-white text-sm font-bold rounded-full text-white bg-black/40 backdrop-blur-sm transition duration-300 hover:bg-white hover:text-black uppercase tracking-widest text-center shadow-lg">
-                            Book Event Now
+                        <a href="#" onclick="showPage('view-hire'); return false;" class="px-10 py-4 border-2 border-accent-blue text-lg font-bold rounded-full text-white bg-transparent transition duration-300 hover:bg-accent-blue/10 hover:scale-105">
+                            BOOK EVENT NOW
                         </a>
                     </div>
                 </div>
-
             </section>
         </div>
         
@@ -231,25 +239,25 @@
                     </p>
 
                     <div class="grid md:grid-cols-3 gap-8">
-                        <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
+                        <div class="p-8 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
                             <div class="text-accent-blue mb-4">
-                                <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 4v4m0 4v-2.5m0-13A9 9 0 1012 2a9 9 0 000 18z"></path></svg>
+                                <svg class="w-12 h-12 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 4v4m0 4v-2.5m0-13A9 9 0 1012 2a9 9 0 000 18z"></path></svg>
                             </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Cost-Effective Excellence</h3>
-                            <p class="text-gray-400">Booking DJ Colt is consistently **cheaper** than large companies, but you still get pro-grade sound and lighting.</p>
+                            <p class="text-gray-400">Booking DJ Colt is consistently <strong>cheaper</strong> than large companies, but you still get pro-grade sound and lighting.</p>
                         </div>
 
-                        <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
+                        <div class="p-8 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
                             <div class="text-accent-blue mb-4">
-                                <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14c0 1.657-3.582 3-8 3s-8-1.343-8-3V6l12 3v13"></path></svg>
+                                <svg class="w-12 h-12 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14c0 1.657-3.582 3-8 3s-8-1.343-8-3V6l12 3v13"></path></svg>
                             </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Unforgettable Atmosphere</h3>
                             <p class="text-gray-400">I focus on reading the room and mixing diverse genres to keep the dance floor packed and the energy high.</p>
                         </div>
 
-                        <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
+                        <div class="p-8 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
                             <div class="text-accent-blue mb-4">
-                                <svg class="w-10 h-10 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.104A9 9 0 1110.003 4.896l.707-.707a9 9 0 0112.728 12.728l-.707.707A9 9 0 0110.003 4.896z"></path></svg>
+                                <svg class="w-12 h-12 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.104A9 9 0 1110.003 4.896l.707-.707a9 9 0 0112.728 12.728l-.707.707A9 9 0 0110.003 4.896z"></path></svg>
                             </div>
                             <h3 class="text-2xl font-semibold mb-3 text-white">Simple, Easy Booking</h3>
                             <p class="text-gray-400">Stress-free process from inquiry to the final song. Clear communication and zero confusion for your big day.</p>
@@ -292,37 +300,34 @@
                         Event <span class="text-accent-blue blue-glow">Gallery</span>
                     </h2>
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+1" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md">
-                        <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+2" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md">
-                        <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+3" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md">
-                        <img src="https://placehold.co/300x200/222222/ffffff?text=Photo+4" class="w-full h-auto object-cover rounded-lg hover:opacity-75 transition duration-300 shadow-md">
+                        <img src="https://placehold.co/600x400/0a0a0a/06b6d4?text=DJ+Colt+Live+1" class="w-full h-auto object-cover rounded-lg hover:scale-105 transition duration-300 shadow-md">
+                        <img src="https://placehold.co/600x400/0a0a0a/06b6d4?text=DJ+Colt+Live+2" class="w-full h-auto object-cover rounded-lg hover:scale-105 transition duration-300 shadow-md">
+                        <img src="https://placehold.co/600x400/0a0a0a/06b6d4?text=DJ+Colt+Live+3" class="w-full h-auto object-cover rounded-lg hover:scale-105 transition duration-300 shadow-md">
+                        <img src="https://placehold.co/600x400/0a0a0a/06b6d4?text=DJ+Colt+Live+4" class="w-full h-auto object-cover rounded-lg hover:scale-105 transition duration-300 shadow-md">
                     </div>
                 </div>
             </section>
         </div>
 
         <!-- 5. SONG REQUESTS PAGE -->
-        <div id="view-requests" class="page-view bg-gray-900">
+        <div id="view-requests" class="page-view bg-gray-950">
             <section class="py-16 md:py-24 px-6">
                 <div class="container mx-auto max-w-3xl text-center">
                     <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
                         Song Requests
                     </h2>
-                    <p class="text-gray-300 mb-10 text-xl">
+                    <p class="text-gray-300 mb-10 text-xl leading-relaxed">
                         I love taking requests! Use the form below to let me know what you want to hear.
                     </p>
 
-                    <div class="bg-primary-black p-10 rounded-2xl shadow-2xl border-2 border-gold-glow/30">
-                        <h3 class="gold-glow-text text-3xl font-black mb-8 tracking-tighter uppercase">
+                    <div class="bg-primary-black p-12 rounded-3xl shadow-2xl border-2 border-gold-glow/20">
+                        <h3 class="gold-glow-text text-3xl font-black mb-8 tracking-tighter uppercase leading-none">
                             CLICK HERE TO REQUEST SONG
                         </h3>
 
                         <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-12 py-5 btn-gold text-2xl font-black rounded-xl transition duration-300 shadow-lg">
                             Submit a Track Now!
                         </a>
-                        <p class="text-gray-500 mt-8 text-sm">
-                            (Direct link to DJ Colt's official request form)
-                        </p>
                     </div>
                 </div>
             </section>
@@ -337,10 +342,10 @@
                     </h2>
                     <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-gray-800 space-y-6">
                         <div class="space-y-4">
-                            <p class="text-2xl font-bold text-accent-blue flex items-center justify-center">
+                            <p class="text-2xl font-bold text-accent-blue">
                                 Phone/Text: <a href="tel:4129531428" class="ml-2 hover:underline">412-953-1428</a>
                             </p>
-                            <p class="text-xl text-gray-300 flex items-center justify-center">
+                            <p class="text-xl text-gray-300">
                                 Email: <a href="mailto:colterlc1928@gmail.com" class="ml-2 hover:underline">colterlc1928@gmail.com</a>
                             </p>
                         </div>
@@ -360,8 +365,9 @@
                         Booking Your <span class="text-accent-blue blue-glow">Vibe</span>
                     </h2>
                     <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-gray-800">
+                        <p class="text-gray-300 mb-8">Ready to lock in your date? Click the button below to fill out the official booking form.</p>
                         <a href="https://forms.gle/Q5rz3Nx32gGBLZYX6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 bg-accent-blue text-primary-black text-xl font-black rounded-lg transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">
-                            Go to Booking Form!
+                            GO TO BOOKING FORM
                         </a>
                     </div>
                 </div>
@@ -369,13 +375,64 @@
         </div>
     </main>
 
-    <footer class="bg-gray-950 border-t border-gray-800 py-8 px-6">
+    <footer class="bg-gray-950 border-t border-gray-800 mt-12 py-10 px-6">
         <div class="container mx-auto text-center text-gray-500">
+            <p class="mb-2 text-white font-bold">DJ COLT</p>
             <p>&copy; <span id="current-year"></span> DJ Colt. All rights reserved. | <span class="text-accent-blue">The Vibe Architect</span></p>
         </div>
     </footer>
 
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        let player;
+        const videoId = 'AX7gPoTmLGU'; 
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('bg-video-player', {
+                videoId: videoId,
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'showinfo': 0,
+                    'rel': 0,
+                    'loop': 1,
+                    'playlist': videoId, 
+                    'mute': 1,           
+                    'iv_load_policy': 3,
+                    'disablekb': 1,
+                    'modestbranding': 1,
+                    'playsinline': 1,
+                    'fs': 0,
+                    'autohide': 1,
+                    'origin': window.location.origin
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.mute();
+            event.target.playVideo();
+            
+            setInterval(() => {
+                if (player && typeof player.getPlayerState === 'function') {
+                    if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                        player.playVideo();
+                    }
+                }
+            }, 3000);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                player.playVideo();
+            }
+        }
+
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
         function toggleMenu() {
