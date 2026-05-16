@@ -93,44 +93,49 @@
             border-bottom: 2px solid #06b6d4;
             color: white;
         }
-        
-        /* Video Background Container */
-        .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
+
+        /* Video Container to match screenshot sizing */
+        .video-wrapper {
+            position: relative;
             width: 100%;
-            height: 100%;
+            max-width: 450px; /* Adjusting to match the portrait look in the screenshot */
+            aspect-ratio: 9/16; /* Portrait ratio matching common mobile recordings */
+            margin: 0 auto;
+            border-radius: 1rem;
             overflow: hidden;
-            z-index: 1;
+            background: #000;
         }
 
-        .video-background {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .video-bg-element {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
-        /* Overlay to ensure text readability */
-        .video-overlay {
+        /* Overlay specific to the video area */
+        .video-vignette {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.9));
-            z-index: 2;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.6) 0%, transparent 40%, transparent 60%, rgba(10, 10, 10, 0.8) 100%);
+            pointer-events: none;
+            z-index: 5;
         }
 
-        .hero-content {
-            position: relative;
+        .hero-content-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
         }
     </style>
 </head>
@@ -174,48 +179,47 @@
     <main class="min-h-screen">
         <!-- 1. HOME PAGE -->
         <div id="view-home" class="page-view active">
-            <section class="relative min-h-[calc(100vh-80px-100px)] flex items-center justify-center p-6 text-center bg-primary-black">
-                <!-- VIDEO BACKGROUND REPLACING LASERS -->
-                <div class="video-container">
-                    <video autoplay muted loop playsinline class="video-background">
+            <section class="min-h-[calc(100vh-80px-100px)] flex flex-col items-center justify-center py-12 px-4 bg-primary-black">
+                
+                <!-- Video Container exactly the size/ratio of the photo -->
+                <div class="video-wrapper shadow-2xl border-2 border-accent-blue/30">
+                    <video autoplay muted loop playsinline class="video-bg-element">
                         <source src="Recording 2026-05-16 001926.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
-                    <div class="video-overlay"></div>
+                    <div class="video-vignette"></div>
+
+                    <!-- Hero Content Overlaid on the Video Area -->
+                    <div class="hero-content-layer text-center">
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black mb-2 tracking-tight leading-tight">
+                            <span class="block text-white">YOUR NIGHT,</span>
+                            <span class="block text-accent-blue blue-glow italic uppercase">Your Soundtrack.</span>
+                        </h1>
+
+                        <!-- GOLDEN ANIMATED REQUEST SECTION -->
+                        <div class="mb-6 mt-4">
+                            <p class="gold-glow-text font-black text-lg sm:text-xl mb-3 tracking-tighter uppercase">
+                                Click here to request song
+                            </p>
+                            <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-8 py-3 btn-gold text-lg font-black rounded-full transition duration-300 shadow-xl">
+                                CLICK HERE
+                            </a>
+                        </div>
+
+                        <h2 class="text-sm sm:text-base text-gray-200 mb-6 font-medium max-w-xs mx-auto drop-shadow-md">
+                            DJ <span class="font-bold text-white">COLT</span>: Mixing fresh tracks and bringing the energy to parties, school events, and gatherings.
+                        </h2>
+                        
+                        <div class="flex flex-col gap-3 w-full max-w-[250px]">
+                            <a href="#" onclick="showPage('view-gallery'); return false;" class="px-6 py-2 text-xs font-bold rounded-full text-primary-black bg-accent-blue transition duration-300 btn-primary uppercase tracking-widest">
+                                View Gallery
+                            </a>
+                            <a href="#" onclick="showPage('view-hire'); return false;" class="px-6 py-2 border border-white text-xs font-bold rounded-full text-white bg-black/40 backdrop-blur-sm transition duration-300 hover:bg-white hover:text-black uppercase tracking-widest">
+                                Book Event Now
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="max-w-4xl mx-auto py-12 hero-content">
-                    
-                    <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black mb-4 tracking-tight leading-tight">
-                        <span class="block text-white">YOUR NIGHT,</span>
-                        <span class="block text-accent-blue blue-glow italic">YOUR SOUNDTRACK.</span>
-                    </h1>
-
-                    <!-- GOLDEN ANIMATED REQUEST SECTION -->
-                    <div class="mb-12 mt-8 transform transition-transform">
-                        <p class="gold-glow-text font-black text-2xl sm:text-3xl mb-4 tracking-tighter uppercase inline-block">
-                            CLICK HERE TO REQUEST SONG
-                        </p>
-                        <br>
-                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 btn-gold text-xl font-black rounded-full transition duration-300 shadow-2xl">
-                            CLICK HERE
-                        </a>
-                    </div>
-
-                    <h2 class="text-xl sm:text-2xl text-gray-300 mb-8 font-light">
-                        DJ <span class="font-bold">COLT</span>: Mixing fresh tracks and bringing the energy to <br class="hidden sm:inline"> parties, school events, and private gatherings.
-                    </h2>
-                    
-                    <div class="my-10 space-y-6">
-                        <a href="#" onclick="showPage('view-gallery'); return false;" class="inline-flex items-center justify-center px-6 py-2 text-base font-bold rounded-full text-primary-black bg-accent-blue transition duration-300 btn-primary hover:bg-sky-400 hover:shadow-accent-blue/50">
-                            CLICK HERE TO SEE GALLERY
-                        </a>
-                    </div>
-
-                    <a href="#" onclick="showPage('view-hire'); return false;" class="inline-flex items-center justify-center px-8 py-3 border-2 border-accent-blue text-base font-bold rounded-full text-white bg-transparent transition duration-300 btn-primary hover:bg-accent-blue hover:text-primary-black">
-                        BOOK YOUR EVENT NOW
-                    </a>
-                </div>
             </section>
         </div>
         
@@ -254,12 +258,6 @@
                             <h3 class="text-2xl font-semibold mb-3 text-white">Simple, Easy Booking</h3>
                             <p class="text-gray-400">Stress-free process from inquiry to the final song. Clear communication and zero confusion for your big day.</p>
                         </div>
-                    </div>
-                    
-                    <div class="text-center mt-16">
-                        <a href="#" onclick="showPage('view-hire'); return false;" class="inline-flex items-center justify-center px-8 py-3 bg-accent-blue text-primary-black text-lg font-bold rounded-lg transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">
-                            Book DJ Colt Today!
-                        </a>
                     </div>
                 </div>
             </section>
