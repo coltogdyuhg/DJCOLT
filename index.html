@@ -62,7 +62,7 @@
             50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
         }
 
-        /* --- ADVANCED MOVING BACKGROUND STYLES --- */
+        /* --- FULL SCREEN VIDEO BACKGROUND --- */
         .hero-container {
             position: relative;
             min-height: calc(100vh - 80px);
@@ -70,7 +70,6 @@
             background-color: #000;
         }
 
-        /* Layer 1: The YouTube Video */
         .video-background-wrapper {
             position: absolute;
             top: 0;
@@ -87,14 +86,15 @@
             top: 50%;
             left: 50%;
             width: 100vw;
-            height: 56.25vw; /* 16:9 Aspect Ratio */
+            height: 56.25vw; /* 16:9 aspect */
             min-height: 100vh;
-            min-width: 177.77vh; /* 16:9 Aspect Ratio */
+            min-width: 177.77vh; /* 16:9 aspect */
             transform: translate(-50%, -50%);
-            opacity: 0.4; /* Slightly dimmed for readability */
+            opacity: 0.7; /* Higher visibility */
         }
 
-        /* Layer 2: Moving Blue/Black Gradient */
+        /* --- STASHED ANIMATIONS (DISABLED FOR NOW) --- */
+        /*
         .moving-gradient-overlay {
             position: absolute;
             top: 0;
@@ -108,13 +108,6 @@
             pointer-events: none;
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Layer 3: The Pulsing Grid */
         .grid-overlay {
             position: absolute;
             top: 0;
@@ -131,9 +124,28 @@
             pointer-events: none;
         }
 
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         @keyframes gridPulse {
             0% { opacity: 0.3; transform: scale(1); }
             100% { opacity: 0.7; transform: scale(1.05); }
+        }
+        */
+
+        /* Darkness overlay for text readability */
+        .vignette-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8) 100%);
+            pointer-events: none;
         }
 
         .page-view {
@@ -205,14 +217,13 @@
                 <div class="video-background-wrapper">
                     <div id="bg-video-player"></div>
                 </div>
-                <div class="moving-gradient-overlay"></div>
-                <div class="grid-overlay"></div>
+                <div class="vignette-overlay"></div>
 
                 <!-- CONTENT LAYER -->
                 <div class="hero-content max-w-4xl mx-auto py-12">
                     
                     <h1 class="text-6xl sm:text-7xl lg:text-9xl font-black mb-6 tracking-tight leading-none">
-                        <span class="block text-white">YOUR NIGHT,</span>
+                        <span class="block text-white drop-shadow-lg">YOUR NIGHT,</span>
                         <span class="block text-accent-blue blue-glow italic">YOUR SOUNDTRACK.</span>
                     </h1>
 
@@ -227,7 +238,7 @@
                         </a>
                     </div>
 
-                    <h2 class="text-xl sm:text-3xl text-gray-200 mb-12 font-light leading-relaxed">
+                    <h2 class="text-xl sm:text-3xl text-gray-200 mb-12 font-light drop-shadow-md leading-relaxed">
                         DJ <span class="font-bold">COLT</span>: Mixing fresh tracks and bringing the energy to <br class="hidden sm:inline"> parties, school events, and private gatherings.
                     </h2>
                     
@@ -417,7 +428,8 @@
                     'mute': 1,           
                     'iv_load_policy': 3,
                     'disablekb': 1,
-                    'modestbranding': 1
+                    'modestbranding': 1,
+                    'playsinline': 1
                 },
                 events: {
                     'onReady': onPlayerReady
