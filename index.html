@@ -80,20 +80,17 @@
             pointer-events: none;
             overflow: hidden;
             background: #000;
-            /* Force-clipping the oversized video */
-            clip-path: inset(0 0 0 0);
         }
 
-        #bg-video-player {
+        #bg-video-element {
             position: absolute;
             top: 50%;
             left: 50%;
-            /* Drastic overscale to ensure the center of the video is all that is seen */
-            width: 150vw; 
-            height: 150vh; 
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures video fills screen without stretching */
             transform: translate(-50%, -50%);
-            opacity: 0.7;
-            pointer-events: none;
+            opacity: 0.6;
         }
 
         /* Darkness overlay for text readability */
@@ -175,7 +172,11 @@
                 
                 <!-- BACKGROUND LAYERS -->
                 <div class="video-background-wrapper">
-                    <div id="bg-video-player"></div>
+                    <!-- HTML5 Video Tag for Local/GitHub MP4 file -->
+                    <video id="bg-video-element" autoplay muted loop playsinline poster="https://placehold.co/1920x1080/000000/000000">
+                        <source src="Recording 2026-05-16 001926.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
                 <div class="vignette-overlay"></div>
 
@@ -369,61 +370,7 @@
         </div>
     </footer>
 
-    <!-- YouTube IFrame API -->
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        let player;
-        const videoId = 'AX7gPoTmLGU'; 
-
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('bg-video-player', {
-                videoId: videoId,
-                playerVars: {
-                    'autoplay': 1,
-                    'controls': 0,
-                    'showinfo': 0,
-                    'rel': 0,
-                    'loop': 1,
-                    'playlist': videoId, 
-                    'mute': 1,           
-                    'iv_load_policy': 3,
-                    'disablekb': 1,
-                    'modestbranding': 1,
-                    'playsinline': 1,
-                    'fs': 0,
-                    'autohide': 1,
-                    'origin': window.location.origin
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            event.target.mute();
-            event.target.playVideo();
-            
-            // Aggressive loop check to ensure it stays playing without showing UI
-            setInterval(() => {
-                if (player && typeof player.getPlayerState === 'function') {
-                    const state = player.getPlayerState();
-                    // If video paused or buffering for too long, force play
-                    if (state === YT.PlayerState.PAUSED || state === YT.PlayerState.CUED) {
-                        player.playVideo();
-                    }
-                }
-            }, 1000);
-        }
-
-        function onPlayerStateChange(event) {
-            // Re-play immediately if it ends or pauses
-            if (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) {
-                player.playVideo();
-            }
-        }
-
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
         function toggleMenu() {
