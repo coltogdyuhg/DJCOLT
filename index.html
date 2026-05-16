@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DJ Colt | The Vibe Architect</title>
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Tailwind Configuration for Theme -->
     <script>
         tailwind.config = {
             theme: {
@@ -14,16 +16,21 @@
                         'accent-blue': '#06b6d4',
                         'light-text': '#e5e7eb',
                         'gold-glow': '#ffd700',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <style>
+        /* Custom styles for a subtle "digital glow" effect on blue elements */
         .blue-glow {
             text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4, 0 0 20px rgba(6, 182, 212, 0.5);
         }
 
+        /* --- GOLD GLOW ANIMATION FOR SONG REQUESTS --- */
         .gold-glow-text {
             color: #ffd700;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
@@ -55,6 +62,7 @@
             50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
         }
 
+        /* --- FULL SCREEN VIDEO BACKGROUND --- */
         .hero-container {
             position: relative;
             min-height: calc(100vh - 80px);
@@ -69,20 +77,23 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+            pointer-events: none;
             overflow: hidden;
+            background: #000;
         }
 
-        #equipment-video {
+        #bg-video-player {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;           /* This makes it fit perfectly */
-            object-position: center;     /* Centers the video */
-            opacity: 0.75;
+            top: 50%;
+            left: 50%;
+            width: 120vw; /* Oversize to hide controls */
+            height: 120vh; /* Oversize to hide controls */
+            transform: translate(-50%, -50%);
+            opacity: 0.7;
+            pointer-events: none;
         }
 
+        /* Darkness overlay for text readability */
         .vignette-overlay {
             position: absolute;
             top: 0;
@@ -90,22 +101,37 @@
             width: 100%;
             height: 100%;
             z-index: 2;
-            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.85) 100%);
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.85) 100%);
             pointer-events: none;
         }
 
-        .page-view { display: none; opacity: 0; transition: opacity 0.4s; }
-        .page-view.active { display: block; opacity: 1; }
-        .nav-link.active-link { border-bottom: 2px solid #06b6d4; color: white; }
-        .hero-content { position: relative; z-index: 10; }
+        .page-view {
+            display: none;
+            min-height: calc(100vh - 80px - 100px);
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .page-view.active {
+            display: block;
+            opacity: 1; 
+        }
+
+        .nav-link.active-link {
+            border-bottom: 2px solid #06b6d4;
+            color: white;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
     </style>
 </head>
 
 <body class="bg-primary-black text-light-text font-sans antialiased">
 
-    <!-- Header (unchanged) -->
     <header class="sticky top-0 z-50 bg-primary-black/95 backdrop-blur-sm shadow-xl">
-        <!-- ... your existing header code ... -->
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <nav class="flex items-center justify-between h-20">
                 <a href="#" onclick="showPage('view-home'); return false;" class="text-3xl font-extrabold text-white blue-glow tracking-wider">DJ <span class="text-accent-blue">COLT</span></a>
@@ -117,7 +143,7 @@
                     <a href="#" id="nav-gallery" onclick="showPage('view-gallery')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300">Gallery</a>
                     <a href="#" id="nav-requests" onclick="showPage('view-requests')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300">Song Requests</a>
                     <a href="#" id="nav-contact" onclick="showPage('view-contact')" class="nav-link text-lg font-medium hover:text-accent-blue transition duration-300">Contact</a>
-                    <a href="#" id="nav-hire" onclick="showPage('view-hire')" class="py-2 px-4 rounded-lg bg-accent-blue text-primary-black font-bold transition duration-300 shadow-lg hover:shadow-accent-blue/50">Hire DJ Colt</a>
+                    <a href="#" id="nav-hire" onclick="showPage('view-hire')" class="py-2 px-4 rounded-lg bg-accent-blue text-primary-black font-bold transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">Hire DJ Colt</a>
                 </div>
 
                 <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
@@ -129,31 +155,36 @@
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden bg-primary-black border-t border-gray-800">
-            <!-- mobile menu links -->
+            <a href="#" onclick="showPage('view-home'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Home</a>
+            <a href="#" onclick="showPage('view-why-colt'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Why Choose Us</a>
+            <a href="#" onclick="showPage('view-services'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Services</a>
+            <a href="#" onclick="showPage('view-gallery'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Gallery</a>
+            <a href="#" onclick="showPage('view-requests'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Song Requests</a>
+            <a href="#" onclick="showPage('view-contact'); toggleMenu();" class="block py-3 px-4 text-white hover:bg-gray-800 transition duration-300">Contact</a>
+            <a href="#" onclick="showPage('view-hire'); toggleMenu();" class="block py-3 px-4 text-primary-black bg-accent-blue hover:bg-sky-400 transition duration-300 font-semibold">Hire DJ Colt</a>
         </div>
     </header>
 
     <main class="min-h-screen">
-        <!-- HOME PAGE -->
+        <!-- 1. HOME PAGE -->
         <div id="view-home" class="page-view active">
             <section class="hero-container flex items-center justify-center p-6 text-center">
                 
-                <!-- EQUIPMENT VIDEO BACKGROUND -->
+                <!-- BACKGROUND LAYERS -->
                 <div class="video-background-wrapper">
-                    <video id="equipment-video" autoplay loop muted playsinline>
-                        <source src="Recording 2026-05-16 001926.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    <div id="bg-video-player"></div>
                 </div>
                 <div class="vignette-overlay"></div>
 
-                <!-- Content -->
+                <!-- CONTENT LAYER -->
                 <div class="hero-content max-w-4xl mx-auto py-12">
+                    
                     <h1 class="text-6xl sm:text-7xl lg:text-9xl font-black mb-6 tracking-tight leading-none">
                         <span class="block text-white drop-shadow-lg">YOUR NIGHT,</span>
                         <span class="block text-accent-blue blue-glow italic">YOUR SOUNDTRACK.</span>
                     </h1>
 
+                    <!-- GOLDEN ANIMATED REQUEST SECTION -->
                     <div class="mb-12 mt-10">
                         <p class="gold-glow-text font-black text-2xl sm:text-3xl mb-4 tracking-tighter uppercase inline-block">
                             CLICK HERE TO REQUEST SONG
@@ -179,10 +210,153 @@
                 </div>
             </section>
         </div>
+        
+        <!-- 2. WHY CHOOSE DJ COLT PAGE -->
+        <div id="view-why-colt" class="page-view bg-gray-950">
+            <section class="py-16 md:py-24 px-6">
+                <div class="container mx-auto max-w-5xl">
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
+                        Why Choose <span class="text-accent-blue blue-glow">DJ Colt</span>?
+                    </h2>
+                    <p class="text-center text-gray-300 mb-16 text-xl max-w-3xl mx-auto">
+                        Choosing the right DJ shouldn't be complicated. Here are three simple reasons why DJ Colt is the perfect fit for your next event.
+                    </p>
 
-        <!-- Rest of your pages (Why Colt, Services, Gallery, etc.) remain the same -->
-        <!-- ... (copy the rest from the previous version) ... -->
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="p-8 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
+                            <div class="text-accent-blue mb-4">
+                                <svg class="w-12 h-12 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 4v4m0 4v-2.5m0-13A9 9 0 1012 2a9 9 0 000 18z"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-3 text-white">Cost-Effective Excellence</h3>
+                            <p class="text-gray-400">Booking DJ Colt is consistently <strong>cheaper</strong> than large companies, but you still get pro-grade sound and lighting.</p>
+                        </div>
 
+                        <div class="p-8 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
+                            <div class="text-accent-blue mb-4">
+                                <svg class="w-12 h-12 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14c0 1.657-3.582 3-8 3s-8-1.343-8-3V6l12 3v13"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-3 text-white">Unforgettable Atmosphere</h3>
+                            <p class="text-gray-400">I focus on reading the room and mixing diverse genres to keep the dance floor packed and the energy high.</p>
+                        </div>
+
+                        <div class="p-8 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800 text-center">
+                            <div class="text-accent-blue mb-4">
+                                <svg class="w-12 h-12 blue-glow mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.104A9 9 0 1110.003 4.896l.707-.707a9 9 0 0112.728 12.728l-.707.707A9 9 0 0110.003 4.896z"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-3 text-white">Simple, Easy Booking</h3>
+                            <p class="text-gray-400">Stress-free process from inquiry to the final song. Clear communication and zero confusion for your big day.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 3. SERVICES PAGE -->
+        <div id="view-services" class="page-view bg-primary-black">
+            <section class="py-16 md:py-24 px-6">
+                <div class="container mx-auto max-w-6xl">
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
+                        DJ Colt Service Packages
+                    </h2>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800">
+                            <h3 class="text-2xl font-semibold mb-3 text-white">The Party Starter</h3>
+                            <p class="text-gray-400">Perfect for birthdays and private celebrations. Includes 2+ hours and basic lighting.</p>
+                        </div>
+                        <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800">
+                            <h3 class="text-2xl font-semibold mb-3 text-white">Event Energy Pack</h3>
+                            <p class="text-gray-400">Designed for school dances and fundraisers. Includes 3+ hours, sound system, and light show.</p>
+                        </div>
+                        <div class="p-6 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue transition duration-300 hover:bg-gray-800">
+                            <h3 class="text-2xl font-semibold mb-3 text-white">Custom Vibe Package</h3>
+                            <p class="text-gray-400">Theme nights or unique events? Let's build a custom package just for you.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- 4. GALLERY PAGE -->
+        <div id="view-gallery" class="page-view bg-gray-900">
+            <section class="py-16 md:py-24 px-6">
+                <div class="container mx-auto max-w-6xl text-center">
+                    <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
+                        Event <span class="text-accent-blue blue-glow">Gallery</span>
+                    </h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <img src="https://placehold.co/600x400/0a0a0a/06b6d4?text=DJ+Colt+Live+1" class="w-full h-auto object-cover rounded-lg hover:scale-105 transition duration-300 shadow-md">
+                        <img src="https://placehold.co/600x400/0a0a0a/06b6d4?text=DJ+Colt+Live+2" class="w-full h-auto object-cover rounded-lg hover:scale-105 transition duration-300 shadow-md">
+                        <img src="https://placehold.co/600x400/0a0a0a/06b6d4?text=DJ+Colt+Live+3" class="w-full h-auto object-cover rounded-lg hover:scale-105 transition duration-300 shadow-md">
+                        <img src="https://placehold.co/600x400/0a0a0a/06b6d4?text=DJ+Colt+Live+4" class="w-full h-auto object-cover rounded-lg hover:scale-105 transition duration-300 shadow-md">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 5. SONG REQUESTS PAGE -->
+        <div id="view-requests" class="page-view bg-gray-950">
+            <section class="py-16 md:py-24 px-6">
+                <div class="container mx-auto max-w-3xl text-center">
+                    <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
+                        Song Requests
+                    </h2>
+                    <p class="text-gray-300 mb-10 text-xl leading-relaxed">
+                        I love taking requests! Use the form below to let me know what you want to hear.
+                    </p>
+
+                    <div class="bg-primary-black p-12 rounded-3xl shadow-2xl border-2 border-gold-glow/20">
+                        <h3 class="gold-glow-text text-3xl font-black mb-8 tracking-tighter uppercase leading-none">
+                            CLICK HERE TO REQUEST SONG
+                        </h3>
+
+                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-12 py-5 btn-gold text-2xl font-black rounded-xl transition duration-300 shadow-lg">
+                            Submit a Track Now!
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 6. CONTACT PAGE -->
+        <div id="view-contact" class="page-view bg-primary-black">
+            <section class="py-16 md:py-24 px-6">
+                <div class="container mx-auto max-w-3xl text-center">
+                    <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
+                        Get In <span class="text-accent-blue blue-glow">Touch</span>
+                    </h2>
+                    <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-gray-800 space-y-6">
+                        <div class="space-y-4">
+                            <p class="text-2xl font-bold text-accent-blue">
+                                Phone/Text: <a href="tel:4129531428" class="ml-2 hover:underline">412-953-1428</a>
+                            </p>
+                            <p class="text-xl text-gray-300">
+                                Email: <a href="mailto:colterlc1928@gmail.com" class="ml-2 hover:underline">colterlc1928@gmail.com</a>
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-gray-700">
+                            <p class="text-gray-400 italic">Please text me to discuss DJing—it's the fastest way to get a reply!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 7. HIRE DJ COLT / BOOKING PAGE -->
+        <div id="view-hire" class="page-view bg-primary-black">
+            <section class="py-16 md:py-24 px-6">
+                <div class="container mx-auto max-w-3xl text-center">
+                    <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
+                        Booking Your <span class="text-accent-blue blue-glow">Vibe</span>
+                    </h2>
+                    <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-gray-800">
+                        <p class="text-gray-300 mb-8">Ready to lock in your date? Click the button below to fill out the official booking form.</p>
+                        <a href="https://forms.gle/Q5rz3Nx32gGBLZYX6" target="_blank" class="inline-flex items-center justify-center px-10 py-4 bg-accent-blue text-primary-black text-xl font-black rounded-lg transition duration-300 btn-primary shadow-lg hover:shadow-accent-blue/50">
+                            GO TO BOOKING FORM
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer class="bg-gray-950 border-t border-gray-800 mt-12 py-10 px-6">
@@ -192,24 +366,99 @@
         </div>
     </footer>
 
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        let player;
+        const videoId = 'AX7gPoTmLGU'; 
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('bg-video-player', {
+                videoId: videoId,
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'showinfo': 0,
+                    'rel': 0,
+                    'loop': 1,
+                    'playlist': videoId, 
+                    'mute': 1,           
+                    'iv_load_policy': 3,
+                    'disablekb': 1,
+                    'modestbranding': 1,
+                    'playsinline': 1,
+                    'fs': 0,
+                    'autohide': 1,
+                    'origin': window.location.origin
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.mute();
+            event.target.playVideo();
+            
+            // Loop check to ensure it stays playing without showing UI
+            setInterval(() => {
+                if (player && typeof player.getPlayerState === 'function') {
+                    if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                        player.playVideo();
+                    }
+                }
+            }, 3000);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                player.playVideo();
+            }
+        }
+
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
         function toggleMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         }
         document.getElementById('mobile-menu-button').addEventListener('click', toggleMenu);
 
+        function updateNavLinkStyle(pageId) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active-link');
+            });
+
+            let activeNavId = '';
+            if (pageId === 'view-home') activeNavId = 'nav-home';
+            else if (pageId === 'view-services') activeNavId = 'nav-services';
+            else if (pageId === 'view-gallery') activeNavId = 'nav-gallery';
+            else if (pageId === 'view-contact') activeNavId = 'nav-contact';
+            else if (pageId === 'view-why-colt') activeNavId = 'nav-why-colt';
+            else if (pageId === 'view-requests') activeNavId = 'nav-requests';
+
+            if (activeNavId) {
+                const activeLink = document.getElementById(activeNavId);
+                if (activeLink) activeLink.classList.add('active-link');
+            }
+        }
+
         function showPage(pageId) {
-            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-            const page = document.getElementById(pageId);
-            if (page) page.classList.add('active');
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(page => page.classList.remove('active'));
+
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+            updateNavLinkStyle(pageId);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             showPage('view-home');
-            const video = document.getElementById('equipment-video');
-            if (video) video.play().catch(() => {});
         });
     </script>
 </body>
