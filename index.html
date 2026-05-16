@@ -415,6 +415,7 @@
         let player;
         const videoId = 'AX7gPoTmLGU'; 
 
+        // Correctly handle YouTube API loading
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('bg-video-player', {
                 videoId: videoId,
@@ -429,16 +430,34 @@
                     'iv_load_policy': 3,
                     'disablekb': 1,
                     'modestbranding': 1,
-                    'playsinline': 1
+                    'playsinline': 1,
+                    'origin': window.location.origin
                 },
                 events: {
-                    'onReady': onPlayerReady
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
                 }
             });
         }
 
         function onPlayerReady(event) {
+            // Unmute and play to ensure it kicks in
+            event.target.mute();
             event.target.playVideo();
+            
+            // Re-attempt play every 2 seconds if not playing (safeguard)
+            setInterval(() => {
+                if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                    player.playVideo();
+                }
+            }, 2000);
+        }
+
+        function onPlayerStateChange(event) {
+            // Re-loop if video ends
+            if (event.data === YT.PlayerState.ENDED) {
+                player.playVideo();
+            }
         }
 
         document.getElementById('current-year').textContent = new Date().getFullYear();
