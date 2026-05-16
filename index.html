@@ -25,12 +25,11 @@
         }
     </script>
     <style>
-        /* Custom styles for a subtle "digital glow" effect on blue elements */
         .blue-glow {
             text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4, 0 0 20px rgba(6, 182, 212, 0.5);
         }
 
-        /* --- GOLD GLOW ANIMATION FOR SONG REQUESTS --- */
+        /* --- GOLD GLOW ANIMATION --- */
         .gold-glow-text {
             color: #ffd700;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
@@ -62,24 +61,17 @@
             50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
         }
 
-        /* --- FULL SCREEN VIDEO BACKGROUND --- */
-        .hero-container {
+        /* --- CENTERED VIDEO CONTAINER (SCREENSHOT STYLE) --- */
+        .video-fixed-container {
             position: relative;
-            min-height: calc(100vh - 80px);
-            overflow: hidden;
-            background-color: #000;
-        }
-
-        .video-background-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
+            max-width: 450px; /* Limits width to look like the screenshot */
+            height: 80vh;    /* Portrait height */
+            margin: 0 auto;
             overflow: hidden;
             background: #000;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
         #bg-video {
@@ -92,24 +84,27 @@
             height: auto;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            opacity: 0.6;
+            opacity: 0.5; /* Dimmed background */
         }
 
-        /* Darkness overlay for text readability */
-        .vignette-overlay {
+        .content-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 2;
-            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.85) 100%);
-            pointer-events: none;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
         }
 
         .page-view {
             display: none;
-            min-height: calc(100vh - 80px - 100px);
             opacity: 0;
             transition: opacity 0.4s ease-in-out;
         }
@@ -123,15 +118,10 @@
             border-bottom: 2px solid #06b6d4;
             color: white;
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-        }
     </style>
 </head>
 
-<body class="bg-primary-black text-light-text font-sans antialiased">
+<body class="bg-primary-black text-light-text font-sans antialiased overflow-x-hidden">
 
     <header class="sticky top-0 z-50 bg-primary-black/95 backdrop-blur-sm shadow-xl">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -167,132 +157,104 @@
         </div>
     </header>
 
-    <main class="min-h-screen">
-        <!-- 1. HOME PAGE -->
-        <div id="view-home" class="page-view active">
-            <section class="hero-container flex items-center justify-center p-6 text-center">
+    <main>
+        <!-- HOME PAGE -->
+        <div id="view-home" class="page-view active min-h-screen flex items-center justify-center py-10">
+            <div class="video-fixed-container shadow-2xl">
+                <!-- VIDEO BACKGROUND -->
+                <video autoplay muted loop playsinline id="bg-video">
+                    <source src="Recording 2026-05-16 001926.mp4" type="video/mp4">
+                </video>
                 
-                <!-- BACKGROUND LAYERS -->
-                <div class="video-background-wrapper">
-                    <!-- Updated to use local MP4 file instead of YouTube -->
-                    <video autoplay muted loop playsinline id="bg-video">
-                        <source src="Recording 2026-05-16 001926.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div class="vignette-overlay"></div>
-
-                <!-- CONTENT LAYER -->
-                <div class="hero-content max-w-4xl mx-auto py-12">
-                    
-                    <h1 class="text-6xl sm:text-7xl lg:text-9xl font-black mb-6 tracking-tight leading-none">
-                        <span class="block text-white drop-shadow-lg">YOUR NIGHT,</span>
-                        <span class="block text-accent-blue blue-glow italic">YOUR SOUNDTRACK.</span>
+                <!-- CONTENT OVER VIDEO -->
+                <div class="content-overlay">
+                    <h1 class="text-4xl sm:text-5xl font-black mb-4 tracking-tighter leading-none">
+                        <span class="block text-white">YOUR NIGHT,</span>
+                        <span class="block text-accent-blue blue-glow">YOUR SOUNDTRACK.</span>
                     </h1>
 
-                    <!-- GOLDEN ANIMATED REQUEST SECTION -->
-                    <div class="mb-12 mt-10">
-                        <p class="gold-glow-text font-black text-2xl sm:text-3xl mb-4 tracking-tighter uppercase inline-block">
+                    <div class="mb-8">
+                        <p class="gold-glow-text font-black text-sm uppercase tracking-widest mb-2">
                             CLICK HERE TO REQUEST SONG
                         </p>
-                        <br>
-                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-12 py-5 btn-gold text-2xl font-black rounded-full transition duration-300 shadow-2xl">
+                        <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-block px-8 py-3 btn-gold text-lg font-black rounded-full transition duration-300">
                             CLICK HERE
                         </a>
                     </div>
 
-                    <h2 class="text-xl sm:text-3xl text-gray-200 mb-12 font-light drop-shadow-md leading-relaxed">
-                        DJ <span class="font-bold">COLT</span>: Mixing fresh tracks and bringing the energy to <br class="hidden sm:inline"> parties, school events, and private gatherings.
-                    </h2>
+                    <p class="text-sm sm:text-base text-gray-200 mb-8 font-medium max-w-xs">
+                        DJ <span class="text-accent-blue">COLT</span>: Mixing fresh tracks and bringing the energy to parties, school events, and private gatherings.
+                    </p>
                     
-                    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                        <a href="#" onclick="showPage('view-gallery'); return false;" class="px-10 py-4 text-lg font-bold rounded-full text-primary-black bg-accent-blue transition duration-300 hover:bg-sky-300 hover:scale-105 shadow-lg shadow-accent-blue/20">
+                    <div class="flex flex-col gap-3 w-full max-w-[250px]">
+                        <a href="#" onclick="showPage('view-gallery'); return false;" class="w-full py-3 text-sm font-bold rounded-lg text-primary-black bg-accent-blue transition duration-300 hover:bg-sky-300">
                             VIEW GALLERY
                         </a>
-                        <a href="#" onclick="showPage('view-hire'); return false;" class="px-10 py-4 border-2 border-accent-blue text-lg font-bold rounded-full text-white bg-transparent transition duration-300 hover:bg-accent-blue/10 hover:scale-105">
+                        <a href="#" onclick="showPage('view-hire'); return false;" class="w-full py-3 border-2 border-accent-blue text-sm font-bold rounded-lg text-white bg-transparent transition duration-300 hover:bg-accent-blue/10">
                             BOOK EVENT NOW
                         </a>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
         
-        <!-- (Pages 2-7 remain identical for navigation structure) -->
-        <div id="view-why-colt" class="page-view bg-gray-950">
-            <section class="py-16 md:py-24 px-6">
-                <div class="container mx-auto max-w-5xl">
-                    <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">
-                        Why Choose <span class="text-accent-blue blue-glow">DJ Colt</span>?
-                    </h2>
-                    <div class="grid md:grid-cols-3 gap-8">
-                        <div class="p-8 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue text-center">
-                            <h3 class="text-2xl font-semibold mb-3 text-white">Cost-Effective Excellence</h3>
-                            <p class="text-gray-400">Booking DJ Colt is consistently cheaper than large companies, but you still get pro-grade sound and lighting.</p>
-                        </div>
-                        <div class="p-8 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue text-center">
-                            <h3 class="text-2xl font-semibold mb-3 text-white">Unforgettable Atmosphere</h3>
-                            <p class="text-gray-400">I focus on reading the room and mixing diverse genres to keep the dance floor packed and the energy high.</p>
-                        </div>
-                        <div class="p-8 bg-gray-900 rounded-xl shadow-2xl border-t-4 border-accent-blue text-center">
-                            <h3 class="text-2xl font-semibold mb-3 text-white">Simple, Easy Booking</h3>
-                            <p class="text-gray-400">Stress-free process from inquiry to the final song. Clear communication and zero confusion for your big day.</p>
-                        </div>
+        <!-- OTHER PAGES (Kept same structure but hidden by default) -->
+        <div id="view-why-colt" class="page-view bg-gray-950 py-20 px-6">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-4xl font-black text-white mb-10">Why Choose <span class="text-accent-blue">DJ Colt</span>?</h2>
+                <div class="grid gap-6">
+                    <div class="p-6 bg-gray-900 rounded-xl border-l-4 border-accent-blue text-left">
+                        <h3 class="text-xl font-bold text-white mb-2">Cheaper Than Big Agencies</h3>
+                        <p class="text-gray-400">Professional sound without the corporate markup.</p>
+                    </div>
+                    <div class="p-6 bg-gray-900 rounded-xl border-l-4 border-accent-blue text-left">
+                        <h3 class="text-xl font-bold text-white mb-2">Custom Experience</h3>
+                        <p class="text-gray-400">I work with you to ensure the playlist matches your specific vibe.</p>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
 
-        <div id="view-services" class="page-view bg-primary-black">
-             <section class="py-16 md:py-24 px-6">
-                <div class="container mx-auto max-w-6xl text-center">
-                    <h2 class="text-4xl sm:text-5xl font-extrabold mb-12 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">Services</h2>
-                    <p class="text-gray-400 text-xl">Customized music and lighting packages for any event size.</p>
+        <div id="view-services" class="page-view py-20 px-6">
+             <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-4xl font-black text-white mb-10 border-b-2 border-accent-blue pb-4 mx-auto w-fit">Services</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-900 p-8 rounded-xl"><h3 class="font-bold text-accent-blue text-xl">Parties</h3><p>Birthdays, graduation, etc.</p></div>
+                    <div class="bg-gray-900 p-8 rounded-xl"><h3 class="font-bold text-accent-blue text-xl">School Events</h3><p>Dances, pep rallies, and sports.</p></div>
                 </div>
-            </section>
+             </div>
         </div>
-        
-        <div id="view-gallery" class="page-view bg-gray-900">
-            <section class="py-16 md:py-24 px-6">
-                <div class="container mx-auto max-w-6xl text-center">
-                    <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">Event Gallery</h2>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        <div class="bg-gray-800 h-64 rounded-lg flex items-center justify-center">Photo 1</div>
-                        <div class="bg-gray-800 h-64 rounded-lg flex items-center justify-center">Photo 2</div>
-                        <div class="bg-gray-800 h-64 rounded-lg flex items-center justify-center">Photo 3</div>
-                        <div class="bg-gray-800 h-64 rounded-lg flex items-center justify-center">Photo 4</div>
-                    </div>
+
+        <div id="view-gallery" class="page-view py-20 px-6 bg-gray-900">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-4xl font-black text-white mb-10">Gallery</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gray-800 aspect-video rounded-lg flex items-center justify-center">PHOTO 1</div>
+                    <div class="bg-gray-800 aspect-video rounded-lg flex items-center justify-center">PHOTO 2</div>
                 </div>
-            </section>
+            </div>
         </div>
 
-        <div id="view-requests" class="page-view bg-gray-950">
-            <section class="py-16 md:py-24 px-6 text-center">
-                <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">Song Requests</h2>
-                <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="inline-flex items-center justify-center px-12 py-5 btn-gold text-2xl font-black rounded-xl shadow-lg">Submit a Track Now!</a>
-            </section>
+        <div id="view-requests" class="page-view py-20 px-6 text-center">
+             <h2 class="text-4xl font-black text-white mb-6">Request Songs</h2>
+             <a href="https://forms.gle/oNGKv4a4zJ8EPMeW6" target="_blank" class="px-8 py-4 bg-gold-glow text-black font-black rounded-full">OPEN REQUEST FORM</a>
         </div>
 
-        <div id="view-contact" class="page-view bg-primary-black">
-            <section class="py-16 md:py-24 px-6 text-center">
-                <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">Contact</h2>
-                <p class="text-2xl text-accent-blue">Phone/Text: 412-953-1428</p>
-                <p class="text-gray-400 italic mt-4">Fastest response via text!</p>
-            </section>
+        <div id="view-contact" class="page-view py-20 px-6 text-center">
+             <h2 class="text-4xl font-black text-white mb-6">Contact Me</h2>
+             <p class="text-2xl font-bold text-accent-blue">412-953-1428</p>
+             <p class="text-gray-500 mt-4 italic">Text is preferred for the fastest response!</p>
         </div>
 
-        <div id="view-hire" class="page-view bg-primary-black">
-            <section class="py-16 md:py-24 px-6 text-center">
-                <h2 class="text-5xl font-extrabold mb-6 text-white border-b-2 border-accent-blue pb-4 mx-auto w-fit">Hire DJ Colt</h2>
-                <a href="https://forms.gle/Q5rz3Nx32gGBLZYX6" target="_blank" class="px-10 py-4 bg-accent-blue text-primary-black text-xl font-black rounded-lg">GO TO BOOKING FORM</a>
-            </section>
+        <div id="view-hire" class="page-view py-20 px-6 text-center">
+            <h2 class="text-4xl font-black text-white mb-6">Book DJ Colt</h2>
+            <a href="https://forms.gle/Q5rz3Nx32gGBLZYX6" target="_blank" class="px-10 py-5 bg-accent-blue text-black font-black text-xl rounded-xl shadow-lg">FILL OUT BOOKING FORM</a>
         </div>
     </main>
 
-    <footer class="bg-gray-950 border-t border-gray-800 mt-12 py-10 px-6">
-        <div class="container mx-auto text-center text-gray-500">
-            <p class="mb-2 text-white font-bold">DJ COLT</p>
-            <p>&copy; <span id="current-year"></span> DJ Colt. All rights reserved.</p>
-        </div>
+    <footer class="bg-gray-950 py-10 border-t border-gray-900 text-center text-gray-500">
+        <p class="font-bold text-white mb-1">DJ COLT</p>
+        <p>&copy; <span id="current-year"></span> All Rights Reserved.</p>
     </footer>
 
     <script>
@@ -308,43 +270,33 @@
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active-link');
             });
-
-            let activeNavId = '';
-            if (pageId === 'view-home') activeNavId = 'nav-home';
-            else if (pageId === 'view-services') activeNavId = 'nav-services';
-            else if (pageId === 'view-gallery') activeNavId = 'nav-gallery';
-            else if (pageId === 'view-contact') activeNavId = 'nav-contact';
-            else if (pageId === 'view-why-colt') activeNavId = 'nav-why-colt';
-            else if (pageId === 'view-requests') activeNavId = 'nav-requests';
-
-            if (activeNavId) {
-                const activeLink = document.getElementById(activeNavId);
-                if (activeLink) activeLink.classList.add('active-link');
+            const navMap = {
+                'view-home': 'nav-home',
+                'view-why-colt': 'nav-why-colt',
+                'view-services': 'nav-services',
+                'view-gallery': 'nav-gallery',
+                'view-requests': 'nav-requests',
+                'view-contact': 'nav-contact'
+            };
+            if (navMap[pageId]) {
+                const el = document.getElementById(navMap[pageId]);
+                if (el) el.classList.add('active-link');
             }
         }
 
         function showPage(pageId) {
-            const pages = document.querySelectorAll('.page-view');
-            pages.forEach(page => page.classList.remove('active'));
-
-            const selectedPage = document.getElementById(pageId);
-            if (selectedPage) {
-                selectedPage.classList.add('active');
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
                 window.scrollTo(0, 0);
             }
             updateNavLinkStyle(pageId);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            showPage('view-home');
-            
-            // Background Video Autoplay Fix for Safari/Chrome
             const bgVideo = document.getElementById('bg-video');
-            if (bgVideo) {
-                bgVideo.play().catch(error => {
-                    console.log("Autoplay was prevented. Video will play once user interacts.");
-                });
-            }
+            if (bgVideo) bgVideo.play().catch(e => console.log("Autoplay blocked"));
         });
     </script>
 </body>
